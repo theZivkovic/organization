@@ -20,7 +20,7 @@ services:
       - "3000:3000"
     environment:
       NODE_ENV: production
-      MONGO_URL: "mongodb://admin:password@mongodb:27017"
+      MONGO_URL: "mongodb://admin:password@mongodb:27017/stores?authSource=admin"
     volumes:
       - ./store-api:/store-api
     depends_on:
