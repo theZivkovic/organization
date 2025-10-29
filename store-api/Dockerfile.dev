@@ -1,0 +1,9 @@
+# Production Dockerfile for pre-built dist
+FROM node:alpine
+
+WORKDIR /store-api
+
+COPY . .
+
+# Run in production mode
+CMD ["npm", "run", "start:dev"]
