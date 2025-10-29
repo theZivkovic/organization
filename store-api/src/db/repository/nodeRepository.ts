@@ -7,11 +7,15 @@ import { Model } from "mongoose";
 export class NodeRepository {
   constructor(@InjectModel(Node.name) private nodeModel: Model<Node>) {}
 
-  async findByName(name: string): Promise<Node | null> {
+  countNodes(): Promise<number> {
+    return this.nodeModel.countDocuments().exec();
+  }
+
+  findByName(name: string): Promise<Node | null> {
     return this.nodeModel.findOne({ name }).exec();
   };
 
-  async findAllDescendants(node: Node): Promise<Node[]> {
+  findAllDescendants(node: Node): Promise<Node[]> {
     return this.nodeModel.find({ 
         left: { $gt: node.left}, 
         right: {$lt: node.right} 
