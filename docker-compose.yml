@@ -20,7 +20,7 @@ services:
       - "3000:3000"
     environment:
       NODE_ENV: production
-      MONGO_URL: "mongodb://admin:password@mongodb:27017/stores?authSource=admin"
+      MONGO_URL: mongodb://admin:password@mongodb:27017/organization?authSource=admin
     volumes:
       - ./store-api:/store-api
     depends_on:
@@ -32,7 +32,7 @@ services:
     container_name: store-seeder
     environment:
       NODE_ENV: production
-      MONGO_URL: "mongodb://admin:password@mongodb:27017/stores?authSource=admin"
+      MONGO_URL: mongodb://admin:password@mongodb:27017/organization?authSource=admin
     volumes:
       - ./store-seeder:/store-seeder
     depends_on:

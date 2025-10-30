@@ -8,7 +8,7 @@ async function run() {
     try {
         const placeNodes = buildPlaceNodesFromData(placeData);
 
-        connection = await connect('mongodb://admin:password@mongodb:27017/stores?authSource=admin');
+        connection = await connect(process.env.MONGO_URL as string);
 
         const existingPlaces = await Place.find({ name: { $in: Array.from(placeNodes.keys()) } }).exec();
 

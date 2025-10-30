@@ -1,19 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { NodeRepository } from './db/repository/nodeRepository';
+import { PlaceRepository } from './db/repository/placeRepository';
 
 @Injectable()
 export class AppService {
 
-  constructor(private configService: ConfigService, private nodeRepository: NodeRepository) {
+  constructor(private configService: ConfigService, private placeRepository: PlaceRepository) {
     
   }
   
   async getHello() {
+    const place = await this.placeRepository.findByName('Srbija');
+
     return {
       hello: 'Hello World!!!!',
       mongo: this.configService.get<string>('MONGO_URL'),
-      nodes: await this.nodeRepository.findByName('Srbija')
+      vojvodinaChildren: place ? await this.placeRepository.findAllDescendants(place) : []
     }
   }
 }

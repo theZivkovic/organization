@@ -1,18 +1,21 @@
 
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
-import { TreeNodeType } from '../tree';
 
 export type NodeDocument = HydratedDocument<Node>;
 
+export enum PlaceType {
+    OFFICE = "OFFICE",
+    STORE = "STORE"
+};
 
 @Schema()
-export class Node {
+export class Place {
   @Prop({required: true})
   name: string;
 
-  @Prop({required: true, enum: TreeNodeType})
-  type: TreeNodeType;
+  @Prop({required: true, enum: PlaceType})
+  type: PlaceType;
 
   @Prop()
   left: number;
@@ -21,4 +24,4 @@ export class Node {
   right: number;
 }
 
-export const NodeSchema = SchemaFactory.createForClass(Node);
+export const PlaceSchema = SchemaFactory.createForClass(Place);
