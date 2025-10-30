@@ -10,12 +10,12 @@ export class AppService {
   }
   
   async getHello() {
-    const place = await this.placeRepository.findByName('Srbija');
+    const place = await this.placeRepository.findByName('Vracar');
 
     return {
       hello: 'Hello World!!!!',
       mongo: this.configService.get<string>('MONGO_URL'),
-      vojvodinaChildren: place ? await this.placeRepository.findAllDescendants(place) : []
+      placeDescendants: place ? await this.placeRepository.findAllDescendants(place) : []
     }
   }
 }

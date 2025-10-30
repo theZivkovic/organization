@@ -1,0 +1,30 @@
+{
+    "name": "Books",
+    "type": "OFFICE",
+    "children": [
+        {
+            "name": "Programming",
+            "type": "OFFICE",
+            "children": [
+                {
+                    "name": "Languages",
+                    "type": "OFFICE"
+                },
+                {
+                    "name": "Databases",
+                    "type": "OFFICE",
+                    "children": [
+                        {
+                            "name": "MongoDB",
+                            "type": "OFFICE"
+                        },
+                        {
+                            "name": "dbm",
+                            "type": "OFFICE"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

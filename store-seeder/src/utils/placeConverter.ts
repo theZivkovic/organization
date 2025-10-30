@@ -50,10 +50,16 @@ function buildPlaceNodesFromData(data: any): Map<string, IPlaceNode> {
                 type: child.type,
                 children: child.children || [],
             });
+
             result.set(child.name, {
                 name: child.name,
                 type: child.type, 
                 left: counter++ });
+
+            if ((child.children ?? []).length === 0){
+                result.set(child.name, {...result.get(child.name) as IPlaceNode, right: counter++});
+                stack.pop();
+            }
         })
         
         if (notProcessedChildren.length === 0){
