@@ -1,6 +1,6 @@
 FROM node:alpine
 
-WORKDIR /place-seeder
+WORKDIR /organization-seeder
 
 COPY . .
 

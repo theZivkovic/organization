@@ -25,16 +25,16 @@ services:
       - ./place-api:/place-api
     depends_on:
       - mongodb
-  place-seeder:
+  organization-seeder:
     build:
-      context: ./place-seeder
+      context: ./organization-seeder
       dockerfile: Dockerfile.dev
-    container_name: place-seeder
+    container_name: organization-seeder
     environment:
       NODE_ENV: production
       MONGO_URL: mongodb://admin:password@mongodb:27017/organization?authSource=admin
     volumes:
-      - ./place-seeder:/place-seeder
+      - ./organization-seeder:/organization-seeder
     depends_on:
       - mongodb
 volumes:
