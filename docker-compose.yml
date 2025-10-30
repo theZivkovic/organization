@@ -11,30 +11,30 @@ services:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: password # Change for production
     restart: unless-stopped
-  store-api:
+  place-api:
     build:
-      context: ./store-api
+      context: ./place-api
       dockerfile: Dockerfile.dev
-    container_name: store-api
+    container_name: place-api
     ports:
       - "3000:3000"
     environment:
       NODE_ENV: production
       MONGO_URL: mongodb://admin:password@mongodb:27017/organization?authSource=admin
     volumes:
-      - ./store-api:/store-api
+      - ./place-api:/place-api
     depends_on:
       - mongodb
-  store-seeder:
+  place-seeder:
     build:
-      context: ./store-seeder
+      context: ./place-seeder
       dockerfile: Dockerfile.dev
-    container_name: store-seeder
+    container_name: place-seeder
     environment:
       NODE_ENV: production
       MONGO_URL: mongodb://admin:password@mongodb:27017/organization?authSource=admin
     volumes:
-      - ./store-seeder:/store-seeder
+      - ./place-seeder:/place-seeder
     depends_on:
       - mongodb
 volumes:
