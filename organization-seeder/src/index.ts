@@ -3,26 +3,29 @@ import { Place } from './models/placeModel';
 import placeData from './data/place-data.json';
 import { buildPlaceNodesFromData } from './utils/placeConverter';
 
+async function seedPlaces() {
+    const placeNodes = buildPlaceNodesFromData(placeData);
+    const existingPlaces = await Place.find({ name: { $in: Array.from(placeNodes.keys()) } }).exec();
+
+    const placesToCreate = Array.from(placeNodes.values()).filter(x => !existingPlaces.some(ep => ep.name === x.name));
+    const createdPlaces = await Promise.all(placesToCreate.map(async placeToCreate => {
+        const newPlace = new Place({
+            name: placeToCreate.name,
+            type: placeToCreate.type,
+            left: placeToCreate.left,
+            right: placeToCreate.right
+        });
+        await newPlace.save();
+        return newPlace;
+    }));
+    console.log(`Inserted ${createdPlaces.length} new places.`);
+}
+
 async function run() {
     let connection: Mongoose | undefined = undefined;
     try {
-        const placeNodes = buildPlaceNodesFromData(placeData);
-
         connection = await connect(process.env.MONGO_URL as string);
-
-        const existingPlaces = await Place.find({ name: { $in: Array.from(placeNodes.keys()) } }).exec();
-
-        const placesToCreate = Array.from(placeNodes.values()).filter(x => !existingPlaces.some(ep => ep.name === x.name));
-        const createdPlaces = await Promise.all(placesToCreate.map(async placeToCreate => {
-            const newPlace = new Place({ 
-                name: placeToCreate.name, 
-                type: placeToCreate.type,
-                left: placeToCreate.left,
-                right: placeToCreate.right });
-            await newPlace.save();
-            return newPlace;
-        }));
-        console.log(`Inserted ${createdPlaces.length} new places.`);
+        await seedPlaces();
     } catch (error) {
         console.error('MongoDB connection or operation error:', error);
     } finally {

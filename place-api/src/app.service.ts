@@ -10,12 +10,13 @@ export class AppService {
   }
   
   async getHello() {
-    const place = await this.placeRepository.findByName('Vracar');
+    const place = await this.placeRepository.findByName('Neimar');
 
     return {
       hello: 'Hello World!!!!',
       mongo: this.configService.get<string>('MONGO_URL'),
-      placeDescendants: place ? await this.placeRepository.findAllDescendants(place) : []
+      placeDescendants: place ? await this.placeRepository.findAllDescendants(place) : [],
+      place: place
     }
   }
 }
