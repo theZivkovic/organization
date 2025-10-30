@@ -25,6 +25,18 @@ services:
       - ./store-api:/store-api
     depends_on:
       - mongodb
+  store-seeder:
+    build:
+      context: ./store-seeder
+      dockerfile: Dockerfile.dev
+    container_name: store-seeder
+    environment:
+      NODE_ENV: production
+      MONGO_URL: "mongodb://admin:password@mongodb:27017/stores?authSource=admin"
+    volumes:
+      - ./store-seeder:/store-seeder
+    depends_on:
+      - mongodb
 volumes:
   mongodb_data:
     driver: local

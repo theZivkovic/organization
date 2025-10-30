@@ -1,0 +1,120 @@
+{
+    "name": "Srbija",
+    "type": "OFFICE",
+    "children": [
+        {
+            "name": "Vojvodina",
+            "type": "OFFICE",
+            "children": [
+                {
+                    "name": "Severnobacki okrug",
+                    "type": "OFFICE",
+                    "children": [
+                        {
+                            "name": "Subotica",
+                            "type": "OFFICE",
+                            "children": [
+                                {
+                                    "name": "Radnja 1",
+                                    "type": "STORE"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Juznobacki okrug",
+                    "type": "OFFICE",
+                    "children": [
+                        {
+                            "name": "Novi Sad",
+                            "type": "OFFICE",
+                            "children": [
+                                {
+                                    "name": "Detelinara",
+                                    "type": "OFFICE",
+                                    "children": [
+                                        {
+                                            "name": "Radnja 2",
+                                            "type": "STORE"
+                                        },
+                                        {
+                                            "name": "Radnja 3",
+                                            "type": "STORE"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "Liman",
+                                    "type": "OFFICE",
+                                    "children": [
+                                        {
+                                            "name": "Radnja 4",
+                                            "type": "STORE"
+                                        },
+                                        {
+                                            "name": "Radnja 5",
+                                            "type": "STORE"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Grad Beograd",
+            "type": "OFFICE",
+            "children": [
+                {
+                    "name": "Novi Beograd",
+                    "type": "OFFICE",
+                    "children": [
+                        {
+                            "name": "Bezanija",
+                            "type": "OFFICE",
+                            "children": [
+                                {
+                                    "name": "Radnja 6",
+                                    "type": "STORE"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Vracar",
+                    "type": "OFFICE",
+                    "children": [
+                        {
+                            "name": "Neimar",
+                            "type": "OFFICE",
+                            "children": [
+                                {
+                                    "name": "Radnja 7",
+                                    "type": "STORE"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Crveni krst",
+                            "type": "OFFICE",
+                            "children": [
+                                {
+                                    "name": "Radnja 8",
+                                    "type": "STORE"
+                                },
+                                {
+                                    "name": "Radnja 9",
+                                    "type": "STORE"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
