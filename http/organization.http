@@ -1,3 +1,4 @@
+### login
 POST http://localhost:3000/auth/login
 Content-Type: application/json
 
@@ -5,3 +6,9 @@ Content-Type: application/json
     "email": "dejan.zivkovic90@gmail.com",
     "password": "SomePassword123!"
 }
+
+
+### me
+GET http://localhost:3000/auth/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRlamFuLnppdmtvdmljOTBAZ21haWwuY29tIiwicm9sZSI6Ik1BTkFHRVIiLCJpYXQiOjE3NjE5MTc4MTgsImV4cCI6MTc2MTkxNzg3OH0.ltwrknj4_GkxUhq43TNoba2f9zfeUeCTHlGIKKV1RPM
+
