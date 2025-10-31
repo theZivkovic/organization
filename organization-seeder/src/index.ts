@@ -1,10 +1,10 @@
 import { connect, Mongoose } from 'mongoose';
 import { Place } from './models/placeModel';
 import placeData from './data/place-data.json';
-import { buildPlaceNodesFromData } from './utils/placeConverter';
+import { buildPlacesFromData } from './utils/placeConverter';
 
 async function seedPlaces() {
-    const placeNodes = buildPlaceNodesFromData(placeData);
+    const placeNodes = buildPlacesFromData(placeData);
     const existingPlaces = await Place.find({ name: { $in: Array.from(placeNodes.keys()) } }).exec();
 
     const placesToCreate = Array.from(placeNodes.values()).filter(x => !existingPlaces.some(ep => ep.name === x.name));

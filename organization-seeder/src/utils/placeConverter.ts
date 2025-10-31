@@ -16,7 +16,7 @@ type IPlaceNode = {
 }
 
 
-function buildPlaceNodesFromData(data: any): Map<string, IPlaceNode> {
+function buildPlacesFromData(data: any): Map<string, IPlaceNode> {
     
     let stack = new Stack<IPlaceNode>();
     let counter = 1;
@@ -69,4 +69,4 @@ function buildPlaceNodesFromData(data: any): Map<string, IPlaceNode> {
     return result;
 }
 
-export { buildPlaceNodesFromData};
+export { buildPlacesFromData };
