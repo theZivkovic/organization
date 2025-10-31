@@ -1,4 +1,4 @@
-import { Place } from 'src/models/placeModel';
+import { Place } from '../models/placeModel';
 import placeData from '../data/place-data.json';
 import { buildPlacesFromData } from '../utils/placeConverter';
 

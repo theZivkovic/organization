@@ -1,5 +1,5 @@
-import { Place } from "src/models/placeModel";
-import { UserPlace } from "src/models/userPlaceModel";
+import { Place } from "../models/placeModel";
+import { UserPlace } from "../models/userPlaceModel";
 
 export async function seedUserPlaces() {
     const mainPlace = await Place.findOne({ left: 1 }).exec();

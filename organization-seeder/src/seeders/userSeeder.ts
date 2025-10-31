@@ -1,5 +1,5 @@
-import { User, UserRole } from "src/models/userModel";
-import { generateSaltAndHash } from "src/utils/passwordHelper";
+import { User, UserRole } from "../models/userModel";
+import { generateSaltAndHash } from "../utils/passwordHelper";
 
 export async function seedUsers() {
     const { salt, hash } = await generateSaltAndHash(process.env.MAIN_MANAGER_RAW_PASSWORD as string);
