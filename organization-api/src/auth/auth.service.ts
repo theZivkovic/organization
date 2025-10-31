@@ -1,17 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { UserRepository } from 'src/infrastructure/repositories/userRepository';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class AuthService {
 
-  constructor(private configService: ConfigService, private userRepository: UserRepository) {
+  constructor(private configService: ConfigService, private usersService: UsersService) {
     
   }
   
   async login(email: string, password: string) {
     return {
-      valid: await this.userRepository.validate(email, password)
+      valid: await this.usersService.validate(email, password)
     };
   }
 }
