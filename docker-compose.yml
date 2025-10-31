@@ -21,6 +21,7 @@ services:
     environment:
       NODE_ENV: production
       MONGO_URL: mongodb://admin:password@mongodb:27017/organization?authSource=admin
+      JWT_SECRET: b322707e-a6cd-4f2b-a12c-9cd53cfd89b0
     volumes:
       - ./organization-api:/organization-api
     depends_on:
