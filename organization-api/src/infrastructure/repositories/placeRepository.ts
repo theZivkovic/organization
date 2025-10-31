@@ -11,8 +11,12 @@ export class PlaceRepository {
     return this.placeModel.countDocuments().exec();
   }
 
-  findByName(name: string): Promise<Place | null> {
+  getByName(name: string): Promise<Place | null> {
     return this.placeModel.findOne({ name }).exec();
+  };
+
+  getById(id: string): Promise<Place | null> {
+    return this.placeModel.findById(id).exec();
   };
 
   findAllDescendants(place: Place): Promise<Place[]> {

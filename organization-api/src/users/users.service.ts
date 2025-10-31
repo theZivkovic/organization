@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { UserRepository } from 'src/infrastructure/repositories/userRepository';
 import { UserDto } from './dtos/userDto';
 import { userModelToDto } from './converters/userConverter';
@@ -9,11 +9,11 @@ export class UsersService {
 
     }
 
-    async getByEmail(email: string): Promise<UserDto | null> {
+    async getByEmail(email: string): Promise<UserDto> {
         const foundUser = await this.userRepository.findByEmail(email);
 
         if (!foundUser){
-            return null;
+            throw new NotFoundException();
         }
 
         return userModelToDto(foundUser);

@@ -10,7 +10,7 @@ export class AppService {
   }
   
   async getHello() {
-    const place = await this.placeRepository.findByName('Novi Beograd');
+    const place = await this.placeRepository.getByName('Novi Beograd');
 
     return {
       hello: 'Hello World!!!!',

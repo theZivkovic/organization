@@ -5,9 +5,11 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { PlaceRepository } from './infrastructure/repositories/placeRepository';
 import { PlaceSchema, Place } from './infrastructure/models/placeModel';
-import { AuthModule } from './features/auth/auth.module';
-import { UsersModule } from './features/users/users.module';
-import { UsersController } from './features/users/users.controller';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+import { UsersController } from './users/users.controller';
+import { PlacesService } from './places/places.service';
+import { PlacesModule } from './places/places.module';
 
 @Module({
   imports: [
@@ -16,9 +18,10 @@ import { UsersController } from './features/users/users.controller';
       ConfigModule.forRoot(),
       AuthModule,
       UsersModule,
+      PlacesModule,
   ],
   controllers: [AppController, UsersController],
-  providers: [AppService, PlaceRepository],
+  providers: [AppService, PlaceRepository, PlacesService],
 })
 
 export class AppModule {}
