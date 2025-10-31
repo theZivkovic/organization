@@ -9,10 +9,9 @@ export class UserService {
     
   }
   
-  async login() {
-    
+  async login(email: string, password: string) {
     return {
-      user: await this.userRepository.findByEmail('dejan.zivkovic90@gmail.com')
-    }
+      valid: await this.userRepository.validate(email, password)
+    };
   }
 }
