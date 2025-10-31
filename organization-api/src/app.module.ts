@@ -5,7 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { PlaceRepository } from './infrastructure/repositories/placeRepository';
 import { PlaceSchema, Place } from './infrastructure/models/placeModel';
-import { UserModule } from './user/user.module';
+import { UserModule } from './auth/auth.module';
 
 @Module({
   imports: [

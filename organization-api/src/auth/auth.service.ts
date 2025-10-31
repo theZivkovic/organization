@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { UserRepository } from 'src/infrastructure/repositories/userRepository';
 
 @Injectable()
-export class UserService {
+export class AuthService {
 
   constructor(private configService: ConfigService, private userRepository: UserRepository) {
     
