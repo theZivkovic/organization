@@ -33,6 +33,10 @@ services:
     environment:
       NODE_ENV: production
       MONGO_URL: mongodb://admin:password@mongodb:27017/organization?authSource=admin
+      MAIN_MANAGER_EMAIL: dejan.zivkovic90@gmail.com
+      MAIN_MANAGER_RAW_PASSWORD: SomePassword123!
+      MAIN_MANAGER_FIRST_NAME: Dejan
+      MAIN_MANAGER_LAST_NAME: Zivkovic
     volumes:
       - ./organization-seeder:/organization-seeder
     depends_on:

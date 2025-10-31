@@ -1,7 +1,12 @@
 import { connect, Mongoose } from 'mongoose';
+import { scrypt, randomBytes } from "crypto";
+import { promisify } from "util";
 import { Place } from './models/placeModel';
 import placeData from './data/place-data.json';
 import { buildPlacesFromData } from './utils/placeConverter';
+import { User, UserRole } from './models/userModel';
+
+const scryptAsync = promisify(scrypt);
 
 async function seedPlaces() {
     const placeNodes = buildPlacesFromData(placeData);
@@ -21,11 +26,35 @@ async function seedPlaces() {
     console.log(`Inserted ${createdPlaces.length} new places.`);
 }
 
+async function seedUsers() {
+    const { salt, hash } = await generateSaltAndHash(process.env.MAIN_MANAGER_RAW_PASSWORD as string);
+
+    const mainManager = new User({
+        email: process.env.MAIN_MANAGER_EMAIL as string,
+        passwordHash: hash,
+        passwordSalt: salt,
+        firstName: process.env.MAIN_MANAGER_FIRST_NAME as string,
+        lastName: process.env.MAIN_MANAGER_LAST_NAME as string,
+        role: UserRole.MANAGER
+    });
+    await mainManager.save();
+}
+
+async function generateSaltAndHash(rawPassword: string): Promise<{ salt: string, hash: string }>{
+    const salt = randomBytes(16).toString("hex");
+    const buf = (await scryptAsync(rawPassword, salt, 64)) as Buffer;
+    const hash = `${buf.toString("hex")}`;
+    return { salt, hash };
+}
+
 async function run() {
     let connection: Mongoose | undefined = undefined;
     try {
         connection = await connect(process.env.MONGO_URL as string);
-        await seedPlaces();
+        await Promise.all([
+            seedPlaces(),
+            seedUsers()
+        ]);
     } catch (error) {
         console.error('MongoDB connection or operation error:', error);
     } finally {
