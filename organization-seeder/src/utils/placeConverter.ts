@@ -41,7 +41,16 @@ function buildPlaceNodesFromData(data: any): Map<string, IPlaceNode> {
             break;
         }
 
-        const notProcessedChildren = (currentNode.children ?? [])
+        console.log('Processing node:', currentNode.name);
+
+        if (!result.has(currentNode.name)){
+            result.set(currentNode.name, {
+                name: currentNode.name,
+                type: currentNode.type, 
+                left: counter++ });
+        }
+
+        const notProcessedChildren = (currentNode.children?.reverse() ?? [])
             .filter((child: any) => !result.has(child.name));
         
         notProcessedChildren.forEach((child: any) => {
@@ -50,19 +59,9 @@ function buildPlaceNodesFromData(data: any): Map<string, IPlaceNode> {
                 type: child.type,
                 children: child.children || [],
             });
+        });
 
-            result.set(child.name, {
-                name: child.name,
-                type: child.type, 
-                left: counter++ });
-
-            if ((child.children ?? []).length === 0){
-                result.set(child.name, {...result.get(child.name) as IPlaceNode, right: counter++});
-                stack.pop();
-            }
-        })
-        
-        if (notProcessedChildren.length === 0){
+        if (notProcessedChildren.length === 0) {
             result.set(currentNode.name, {...result.get(currentNode.name) as IPlaceNode, right: counter++});
             stack.pop();
         }
