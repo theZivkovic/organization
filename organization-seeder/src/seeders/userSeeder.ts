@@ -2,6 +2,11 @@ import { User, UserRole } from "../models/userModel";
 import { generateSaltAndHash } from "../utils/passwordHelper";
 
 export async function seedUsers() {
+    console.log('!!!!!!', await User.exists({ email: process.env.MAIN_MANAGER_EMAIL as string }).exec());
+    if (await User.exists({ email: process.env.MAIN_MANAGER_EMAIL as string }).exec()) {
+        return;
+    }
+
     const { salt, hash } = await generateSaltAndHash(process.env.MAIN_MANAGER_RAW_PASSWORD as string);
 
     const mainManager = new User({
@@ -12,6 +17,7 @@ export async function seedUsers() {
         lastName: process.env.MAIN_MANAGER_LAST_NAME as string,
         role: UserRole.MANAGER
     });
+    
     await mainManager.save();
-    console.log(`Inserted main manager.`);
+    console.log(`Inserted main manager.`);   
 }
