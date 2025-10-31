@@ -5,6 +5,7 @@ import { Place } from './models/placeModel';
 import placeData from './data/place-data.json';
 import { buildPlacesFromData } from './utils/placeConverter';
 import { User, UserRole } from './models/userModel';
+import { UserPlace } from './models/userPlaceModel';
 
 const scryptAsync = promisify(scrypt);
 
@@ -38,6 +39,19 @@ async function seedUsers() {
         role: UserRole.MANAGER
     });
     await mainManager.save();
+    console.log(`Inserted main manager.`);
+}
+
+async function seedUserPlaces() {
+    const mainPlace = await Place.findOne({ left: 1 }).exec();
+
+    const mainManagerToMainPlace = new UserPlace({
+        userEmail: process.env.MAIN_MANAGER_EMAIL as string,
+        placeName: mainPlace?.name as string,
+    });
+
+    await mainManagerToMainPlace.save();
+    console.log(`Added main manager to main place.`);
 }
 
 async function generateSaltAndHash(rawPassword: string): Promise<{ salt: string, hash: string }>{
@@ -55,6 +69,7 @@ async function run() {
             seedPlaces(),
             seedUsers()
         ]);
+        await seedUserPlaces();
     } catch (error) {
         console.error('MongoDB connection or operation error:', error);
     } finally {
