@@ -7,6 +7,7 @@ import { PlaceRepository } from './infrastructure/repositories/placeRepository';
 import { PlaceSchema, Place } from './infrastructure/models/placeModel';
 import { AuthModule } from './features/auth/auth.module';
 import { UsersModule } from './features/users/users.module';
+import { UsersController } from './features/users/users.controller';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { UsersModule } from './features/users/users.module';
       AuthModule,
       UsersModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, UsersController],
   providers: [AppService, PlaceRepository],
 })
 

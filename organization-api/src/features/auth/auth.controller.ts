@@ -10,11 +10,4 @@ export class AuthController {
   async login(@Body() body: { email: string; password: string }) {
     return this.authService.login(body.email, body.password);
   }
-
-  @UseGuards(AuthGuard)
-  @Get('me')
-  async getMe(@Request() req){
-    return req.user;
-  }
-
 }
