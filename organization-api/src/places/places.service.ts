@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { PlaceRepository } from 'src/infrastructure/repositories/placeRepository';
 import { placeModelToDto, placeModelToFullDto } from './converters/placeConverter';
 import { UserPlaceRepository } from 'src/infrastructure/repositories/userPlaceRepository';
@@ -34,24 +34,29 @@ export class PlacesService {
     }
 
     async getPlaceForUser(userId: string, placeId: string): Promise<PlaceFullDto> {
-        const foundUserPlace = await this.userPlaceRepository.get(userId, placeId);
 
-        if (!foundUserPlace){
-            throw new NotFoundException('user and place connection not found');
+        const foundUserPlaces = await this.userPlaceRepository.getAllForUser(userId);
+
+        if (foundUserPlaces.length === 0) {
+            throw new NotFoundException('User not assigned to any place');
         }
 
-        const user = await this.userRepository.getById(foundUserPlace.userId);
-
-        if (!user){
-            throw new NotFoundException('user not found');
-        }
-
-        const place = await this.placeRepository.getById(userId);
+        const place = await this.placeRepository.getById(foundUserPlaces[0].placeId);
 
         if (!place) {
             throw new NotFoundException('Place not found');
         }
+
+        const placeDescendants = await this.placeRepository.getAllDescendants(place);
+
+        const placeToCheck = [place, ...placeDescendants].find(x => x._id.toString() === placeId);
+        if (!placeToCheck){
+            throw new UnauthorizedException('user is not allowed to see this place');
+        }
+
+        const user = await this.userRepository.getById(userId);
+        const userPlacesToCheck = await this.userPlaceRepository.get(user!._id.toString(), placeToCheck._id.toString());
         
-        return placeModelToFullDto(place, [foundUserPlace], [user]);
+        return placeModelToFullDto(place, userPlacesToCheck ? [userPlacesToCheck]: [], user ? [user]: []);
     }
 }
