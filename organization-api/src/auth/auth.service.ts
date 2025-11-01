@@ -21,7 +21,8 @@ export class AuthService {
     const user = (await this.usersService.getByEmail(request.email))!;
 
     const payload = { 
-      userId: user.id
+      userId: user.id,
+      userRole: user.role
     };
 
     return {
