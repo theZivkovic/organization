@@ -3,6 +3,8 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { User, UserRole } from "../models/userModel";
 import { comparePassword, generateSaltAndHash } from "src/utils/passwordHelper";
+import { UserDto } from "src/users/dtos/userDto";
+import { userModelToDto } from "src/users/converters/userConverter";
 
 @Injectable()
 export class UserRepository {
@@ -11,6 +13,10 @@ export class UserRepository {
   getByEmail(email: string): Promise<User | null> {
     return this.userModel.findOne({ email }).exec();
   };
+
+  async getAllByIds(ids: Array<string>): Promise<Array<User>> {
+    return (await this.userModel.find( {_id: { $in: ids}}).exec());
+  }
 
   async create(request: Partial<Omit<User, "_id">>): Promise<User>
   {

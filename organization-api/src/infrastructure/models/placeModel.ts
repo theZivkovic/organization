@@ -1,5 +1,6 @@
 
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Schema as MongooseSchema } from 'mongoose';
 
 export enum PlaceType {
     OFFICE = "OFFICE",
@@ -8,6 +9,11 @@ export enum PlaceType {
 
 @Schema()
 export class Place {
+
+
+  @Prop({ type: MongooseSchema.Types.ObjectId, auto: true })
+  _id: MongooseSchema.Types.ObjectId;
+
   @Prop({required: true})
   name: string;
 

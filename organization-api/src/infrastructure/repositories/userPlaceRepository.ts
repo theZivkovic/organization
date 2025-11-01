@@ -11,4 +11,8 @@ export class UserPlaceRepository {
   getAllForUser(userId: string): Promise<Array<UserPlace>> {
     return this.userPlaceModel.find({ userId }).exec();
   };
+
+  getAllForPlaces(placeIds: Array<string>): Promise<Array<UserPlace>> {
+    return this.userPlaceModel.find({ placeId: { $in: placeIds }}).exec();
+  }
 }

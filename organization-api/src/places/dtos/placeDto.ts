@@ -4,6 +4,7 @@ export enum PlaceTypeDto {
 };
 
 export type PlaceDto = {
+    id: string;
     name: string;
     type: PlaceTypeDto;
 }

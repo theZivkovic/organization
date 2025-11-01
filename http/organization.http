@@ -7,6 +7,15 @@ Content-Type: application/json
     "password": "SomePassword123!"
 }
 
+### login 2
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+    "email": "dejan.zivkovic92@gmail.com",
+    "password": "abc123"
+}
+
 ### me
 GET http://localhost:3000/users/me
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA1ZTU3ZGNkZTg3ZTY0ODhiMTgyZjQiLCJ1c2VyUm9sZSI6Ik1BTkFHRVIiLCJpYXQiOjE3NjIwMDU5NDUsImV4cCI6MTc2MjAwOTU0NX0.IRYSGPTmKlHV8KK9_2O6DtlquHWDjhozXUCJB9BNxDE
@@ -36,4 +45,4 @@ Content-Type: application/json
 
 ### get places
 GET http://localhost:3000/places
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA1ZTU3ZGNkZTg3ZTY0ODhiMTgyZjQiLCJpYXQiOjE3NjE5OTU0NjYsImV4cCI6MTc2MTk5OTA2Nn0.-Y96XsUzw1vMKrBC3KN0bBt2N0nDshSB2UZQkGIZzzs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA1ZTU3ZGNkZTg3ZTY0ODhiMTgyZjQiLCJ1c2VyUm9sZSI6Ik1BTkFHRVIiLCJpYXQiOjE3NjIwMTU3MzEsImV4cCI6MTc2MjAxOTMzMX0.-63pHf4JYnLZdLLoiRf1ie70lrdOEu4sxFtJ2HKHxbE
