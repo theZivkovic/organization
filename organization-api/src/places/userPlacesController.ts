@@ -16,6 +16,6 @@ export class UserPlacesController {
       @UseGuards(RoleGuard([UserRoleDto.MANAGER]))
       @Delete('/:placeId/users/:userId')
       removeUserFromAPlace(@Request() req, @Param('placeId') placeId: string, @Param('userId') userId: string) {
-        //return this.placesService.getPlaceForUser(req.user.userId, placeId);
+        return this.placesService.removeUserToAPlace(req.user.userId, userId, placeId);
       }
 }

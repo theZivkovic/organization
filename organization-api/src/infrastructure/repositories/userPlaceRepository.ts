@@ -27,4 +27,8 @@ export class UserPlaceRepository {
     }
     return createdUserPlace.toObject() as UserPlace;
   }
+
+  async delete(userId: string, placeId: string) {
+    await this.userPlaceModel.deleteOne({ userId, placeId});
+  }
 }

@@ -111,6 +111,47 @@ export class PlacesService {
         const createdUserPlace = await this.userPlaceRepository.create(userToAddId, placeId);
 
         return placeModelToFullDto(place, [createdUserPlace], [userToAdd])
+    }
 
+    async removeUserToAPlace(managerUserId: string, userToRemoveId: string, placeId: string){
+        
+        const userToRemove = await this.userRepository.getById(userToRemoveId);
+
+        if (!userToRemove){
+            throw new NotFoundException('User-to-remove not found');
+        }
+
+        const place = await this.placeRepository.getById(placeId);
+
+        if (!place){
+            throw new NotFoundException('Place not found');
+        }
+
+        const userToRemoveWorkplace = await this.userPlaceRepository.getForUser(userToRemoveId);
+        
+        if (!userToRemoveWorkplace || userToRemoveWorkplace.placeId !== placeId ){
+            throw new NotFoundException('User is not assigned to this place');
+        }
+
+        const managingUsersWorkplace = await this.userPlaceRepository.getForUser(managerUserId);
+
+        if (!managingUsersWorkplace){
+            throw new NotFoundException('Logged in user is not assigned to any place');
+        }
+
+        const managingUserPlace = await this.placeRepository.getById(managingUsersWorkplace.placeId);
+
+        if (!managingUserPlace){
+            throw new NotFoundException('Place not found');
+        }
+
+        const placeDescendants = await this.placeRepository.getAllDescendants(managingUserPlace);
+
+        const allPlacesUnderManagingUser = [...placeDescendants, managingUserPlace];
+        if (!allPlacesUnderManagingUser.some(x => x._id.toString() === placeId)){
+            throw new UnauthorizedException('Logged in user is not allowed to remove users from this place');
+        }
+
+        await this.userPlaceRepository.delete(userToRemoveId, placeId);
     }
 }
