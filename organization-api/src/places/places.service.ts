@@ -2,20 +2,30 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PlaceRepository } from 'src/infrastructure/repositories/placeRepository';
 import { PlaceDto} from './dtos/placeDto';
 import { placeModelToDto } from './converters/placeConverter';
+import { UserPlaceRepository } from 'src/infrastructure/repositories/userPlaceRepository';
 
 @Injectable()
 export class PlacesService {
-    constructor(private placeRepository: PlaceRepository) {
+    constructor(private placeRepository: PlaceRepository, private userPlaceRepository: UserPlaceRepository) {
 
     }
 
-    async getById(id: string): Promise<PlaceDto> {
-        const foundPlace = await this.placeRepository.getById(id);
+    async getPlacesForUser(userEmail: string): Promise<Array<PlaceDto>> {
+        const foundUserPlaces = await this.userPlaceRepository.getAllForUser(userEmail);
 
-        if (!foundPlace) {
+        if (foundUserPlaces.length === 0) {
             throw new NotFoundException();
         }
 
-        return placeModelToDto(foundPlace);
+        const place = await this.placeRepository.getByName(foundUserPlaces[0].placeName);
+
+        if (!place) {
+            throw new NotFoundException();
+        }
+
+        const placeDescendants = await this.placeRepository.getAllDescendants(place);
+
+        return [...placeDescendants, place].map(x => placeModelToDto(x));
+
     }
 }

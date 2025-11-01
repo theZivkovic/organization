@@ -19,7 +19,7 @@ export class PlaceRepository {
     return this.placeModel.findById(id).exec();
   };
 
-  findAllDescendants(place: Place): Promise<Place[]> {
+  getAllDescendants(place: Place): Promise<Place[]> {
     return this.placeModel.find({ 
         left: { $gte: place.left}, 
         right: {$lt: place.right} 

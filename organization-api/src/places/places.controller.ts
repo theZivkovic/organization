@@ -7,10 +7,10 @@ export class PlacesController {
     constructor(private placesService: PlacesService) {}
     
       @UseGuards(AuthGuard)
-      @Get(':placeId/employees')
-      async getMe(@Request() req, @Param('placeId') placeId: string){
+      @Get('/')
+      async getPlaces(@Request() req) {
         return {
-            place: await this.placesService.getById(placeId)
+            place: await this.placesService.getPlacesForUser(req.user.email)
         }
       }
 }

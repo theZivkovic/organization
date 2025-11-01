@@ -15,7 +15,7 @@ export class AppService {
     return {
       hello: 'Hello World!!!!',
       mongo: this.configService.get<string>('MONGO_URL'),
-      placeDescendants: place ? await this.placeRepository.findAllDescendants(place) : [],
+      placeDescendants: place ? await this.placeRepository.getAllDescendants(place) : [],
       place: place
     }
   }
