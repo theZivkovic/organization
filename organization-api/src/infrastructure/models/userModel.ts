@@ -1,5 +1,6 @@
 
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Schema as MongooseSchema } from 'mongoose';
 
 export enum UserRole {
     MANAGER = "MANAGER",
@@ -8,6 +9,14 @@ export enum UserRole {
 
 @Schema()
 export class User {
+
+  @Prop({ type: MongooseSchema.Types.ObjectId, auto: true })
+  _id: MongooseSchema.Types.ObjectId;
+
+  get id() {
+    return this._id;
+  }
+
   @Prop({required: true})
   email: string;
 

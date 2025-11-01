@@ -3,6 +3,7 @@ import { UserDto, UserRoleDto } from "../dtos/userDto";
 
 export function userModelToDto(user: User): UserDto{
     return {
+        id: user.id.toString(),
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,

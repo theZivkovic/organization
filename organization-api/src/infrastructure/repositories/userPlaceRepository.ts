@@ -8,7 +8,8 @@ export class UserPlaceRepository {
   constructor(@InjectModel(UserPlace.name) private userPlaceModel: Model<UserPlace>) {}
 
 
-  getAllForUser(userEmail: string): Promise<Array<UserPlace>> {
-    return this.userPlaceModel.find({ userEmail }).exec();
+  getAllForUser(userId: string): Promise<Array<UserPlace>> {
+    console.log('?????', userId);
+    return this.userPlaceModel.find({ userId }).exec();
   };
 }

@@ -10,7 +10,7 @@ export class PlacesController {
       @Get('/')
       async getPlaces(@Request() req) {
         return {
-            place: await this.placesService.getPlacesForUser(req.user.email)
+            place: await this.placesService.getPlacesForUser(req.user.userId)
         }
       }
 }

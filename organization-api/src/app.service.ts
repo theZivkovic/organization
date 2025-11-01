@@ -10,13 +10,10 @@ export class AppService {
   }
   
   async getHello() {
-    const place = await this.placeRepository.getByName('Novi Beograd');
-
+   
     return {
       hello: 'Hello World!!!!',
       mongo: this.configService.get<string>('MONGO_URL'),
-      placeDescendants: place ? await this.placeRepository.getAllDescendants(place) : [],
-      place: place
     }
   }
 }

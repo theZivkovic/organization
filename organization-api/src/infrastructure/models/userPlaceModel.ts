@@ -9,10 +9,10 @@ export enum PlaceType {
 @Schema()
 export class UserPlace {
   @Prop({required: true})
-  userEmail: string;
+  userId: string;
 
   @Prop({required: true})
-  placeName: string;
+  placeId: string;
 }
 
 export const UserPlaceSchema = SchemaFactory.createForClass(UserPlace);

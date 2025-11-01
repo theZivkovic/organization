@@ -2,7 +2,6 @@ import { User, UserRole } from "../models/userModel";
 import { generateSaltAndHash } from "../utils/passwordHelper";
 
 export async function seedUsers() {
-    console.log('!!!!!!', await User.exists({ email: process.env.MAIN_MANAGER_EMAIL as string }).exec());
     if (await User.exists({ email: process.env.MAIN_MANAGER_EMAIL as string }).exec()) {
         return;
     }

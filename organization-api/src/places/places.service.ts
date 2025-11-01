@@ -10,17 +10,18 @@ export class PlacesService {
 
     }
 
-    async getPlacesForUser(userEmail: string): Promise<Array<PlaceDto>> {
-        const foundUserPlaces = await this.userPlaceRepository.getAllForUser(userEmail);
+    async getPlacesForUser(userId: string): Promise<Array<PlaceDto>> {
+        
+        const foundUserPlaces = await this.userPlaceRepository.getAllForUser(userId);
 
         if (foundUserPlaces.length === 0) {
-            throw new NotFoundException();
+            throw new NotFoundException('User not assigned to a place');
         }
 
-        const place = await this.placeRepository.getByName(foundUserPlaces[0].placeName);
+        const place = await this.placeRepository.getById(foundUserPlaces[0].placeId);
 
         if (!place) {
-            throw new NotFoundException();
+            throw new NotFoundException('Place not found');
         }
 
         const placeDescendants = await this.placeRepository.getAllDescendants(place);
