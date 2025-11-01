@@ -12,44 +12,44 @@ export class PlacesService {
     }
 
     async getPlacesForUser(userId: string): Promise<Array<PlaceFullDto>> {
-        const foundUserPlaces = await this.userPlaceRepository.getAllForUser(userId);
+        const usersWorkplace = await this.userPlaceRepository.getForUser(userId);
 
-        if (foundUserPlaces.length === 0) {
+        if (!usersWorkplace) {
             throw new NotFoundException('User not assigned to a place');
         }
 
-        const place = await this.placeRepository.getById(foundUserPlaces[0].placeId);
+        const placeWhereUserWorks = await this.placeRepository.getById(usersWorkplace.placeId);
 
-        if (!place) {
+        if (!placeWhereUserWorks) {
             throw new NotFoundException('Place not found');
         }
 
-        const placeDescendants = await this.placeRepository.getAllDescendants(place);
+        const placeDescendants = await this.placeRepository.getAllDescendants(placeWhereUserWorks);
 
-        const allPlaces = [...placeDescendants, place];
+        const allPlaces = [...placeDescendants, placeWhereUserWorks];
         const allUserPlaces = await this.userPlaceRepository.getAllForPlaces(allPlaces.map(x => x._id.toString()));
         const allUsers = await this.userRepository.getAllByIds(allUserPlaces.map(x => x.userId));
-        
-        return [...placeDescendants, place].map(place => placeModelToFullDto(place, allUserPlaces, allUsers));
+
+        return allPlaces.map(place => placeModelToFullDto(place, allUserPlaces, allUsers));
     }
 
     async getPlaceForUser(userId: string, placeId: string): Promise<PlaceFullDto> {
 
-        const foundUserPlaces = await this.userPlaceRepository.getAllForUser(userId);
+        const usersWorkplace = await this.userPlaceRepository.getForUser(userId);
 
-        if (foundUserPlaces.length === 0) {
+        if (!usersWorkplace) {
             throw new NotFoundException('User not assigned to any place');
         }
 
-        const place = await this.placeRepository.getById(foundUserPlaces[0].placeId);
+        const placeWhereUserWorks = await this.placeRepository.getById(usersWorkplace.placeId);
 
-        if (!place) {
+        if (!placeWhereUserWorks) {
             throw new NotFoundException('Place not found');
         }
 
-        const placeDescendants = await this.placeRepository.getAllDescendants(place);
+        const placeDescendants = await this.placeRepository.getAllDescendants(placeWhereUserWorks);
 
-        const placeToCheck = [place, ...placeDescendants].find(x => x._id.toString() === placeId);
+        const placeToCheck = [placeWhereUserWorks, ...placeDescendants].find(x => x._id.toString() === placeId);
         if (!placeToCheck){
             throw new UnauthorizedException('user is not allowed to see this place');
         }
@@ -57,6 +57,10 @@ export class PlacesService {
         const user = await this.userRepository.getById(userId);
         const userPlacesToCheck = await this.userPlaceRepository.get(user!._id.toString(), placeToCheck._id.toString());
         
-        return placeModelToFullDto(place, userPlacesToCheck ? [userPlacesToCheck]: [], user ? [user]: []);
+        return placeModelToFullDto(
+            placeToCheck, 
+            userPlacesToCheck ? [userPlacesToCheck]: [], 
+            user ? [user]: []
+        );
     }
 }

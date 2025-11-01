@@ -11,8 +11,8 @@ export class UserPlaceRepository {
     return this.userPlaceModel.findOne({ userId, placeId }).exec();
   }
 
-  getAllForUser(userId: string): Promise<Array<UserPlace>> {
-    return this.userPlaceModel.find({ userId }).exec();
+  getForUser(userId: string): Promise<UserPlace | null> {
+    return this.userPlaceModel.findOne({ userId }).exec();
   };
 
   getAllForPlaces(placeIds: Array<string>): Promise<Array<UserPlace>> {
