@@ -7,6 +7,9 @@ import { UserPlace } from "../models/userPlaceModel";
 export class UserPlaceRepository {
   constructor(@InjectModel(UserPlace.name) private userPlaceModel: Model<UserPlace>) {}
 
+  get(userId: string, placeId: string): Promise<UserPlace | null> {
+    return this.userPlaceModel.findOne({ userId, placeId }).exec();
+  }
 
   getAllForUser(userId: string): Promise<Array<UserPlace>> {
     return this.userPlaceModel.find({ userId }).exec();

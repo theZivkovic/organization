@@ -9,9 +9,13 @@ export class PlacesController {
     
       @UseGuards(RoleGuard([UserRoleDto.EMPLOYEE, UserRoleDto.MANAGER]))
       @Get('/')
-      async getPlaces(@Request() req) {
-        return {
-            place: await this.placesService.getPlacesForUser(req.user.userId)
-        }
+      getPlaces(@Request() req) {
+        return this.placesService.getPlacesForUser(req.user.userId)
+      }
+
+      @UseGuards(RoleGuard([UserRoleDto.EMPLOYEE, UserRoleDto.MANAGER]))
+      @Get('/:placeId')
+      getPlace(@Request() req, @Param('placeId') placeId: string) {
+        return this.placesService.getPlaceForUser(req.user.userId, placeId);
       }
 }

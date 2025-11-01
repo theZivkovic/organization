@@ -32,4 +32,26 @@ export class PlacesService {
         
         return [...placeDescendants, place].map(place => placeModelToFullDto(place, allUserPlaces, allUsers));
     }
+
+    async getPlaceForUser(userId: string, placeId: string): Promise<PlaceFullDto> {
+        const foundUserPlace = await this.userPlaceRepository.get(userId, placeId);
+
+        if (!foundUserPlace){
+            throw new NotFoundException('user and place connection not found');
+        }
+
+        const user = await this.userRepository.getById(foundUserPlace.userId);
+
+        if (!user){
+            throw new NotFoundException('user not found');
+        }
+
+        const place = await this.placeRepository.getById(userId);
+
+        if (!place) {
+            throw new NotFoundException('Place not found');
+        }
+        
+        return placeModelToFullDto(place, [foundUserPlace], [user]);
+    }
 }

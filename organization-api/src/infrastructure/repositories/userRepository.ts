@@ -14,6 +14,10 @@ export class UserRepository {
     return this.userModel.findOne({ email }).exec();
   };
 
+  getById(id: string): Promise<User | null> {
+    return this.userModel.findById(id).exec();
+  };
+
   async getAllByIds(ids: Array<string>): Promise<Array<User>> {
     return (await this.userModel.find( {_id: { $in: ids}}).exec());
   }
