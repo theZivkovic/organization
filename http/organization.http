@@ -7,20 +7,32 @@ Content-Type: application/json
     "password": "SomePassword123!"
 }
 
-### register
+### me
+GET http://localhost:3000/users/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA1ZTU3ZGNkZTg3ZTY0ODhiMTgyZjQiLCJ1c2VyUm9sZSI6Ik1BTkFHRVIiLCJpYXQiOjE3NjIwMDU5NDUsImV4cCI6MTc2MjAwOTU0NX0.IRYSGPTmKlHV8KK9_2O6DtlquHWDjhozXUCJB9BNxDE
+
+
+### create registration token
 POST http://localhost:3000/users/registration-tokens
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA1ZTU3ZGNkZTg3ZTY0ODhiMTgyZjQiLCJ1c2VyUm9sZSI6Ik1BTkFHRVIiLCJpYXQiOjE3NjIwMTMzNzYsImV4cCI6MTc2MjAxNjk3Nn0.HRLcwPCuJBBHVFVgc7robm2CoJuDeSYdq8HiV9xDZpQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA1ZTU3ZGNkZTg3ZTY0ODhiMTgyZjQiLCJ1c2VyUm9sZSI6Ik1BTkFHRVIiLCJpYXQiOjE3NjIwMTQ0MzUsImV4cCI6MTc2MjAxODAzNX0.JmxX4B9fMafrmuV9EcUa0yqCYPZV3gqOMmrRgjDHBMk
 
 {
     "toUserEmail": "dejan.zivkovic92@gmail.com",
     "toUserRole": "EMPLOYEE"
 }
 
-### me
-GET http://localhost:3000/users/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA1ZTU3ZGNkZTg3ZTY0ODhiMTgyZjQiLCJ1c2VyUm9sZSI6Ik1BTkFHRVIiLCJpYXQiOjE3NjIwMDU5NDUsImV4cCI6MTc2MjAwOTU0NX0.IRYSGPTmKlHV8KK9_2O6DtlquHWDjhozXUCJB9BNxDE
 
+### register
+POST http://localhost:3000/users/register
+Content-Type: application/json
+
+{
+    "token": "63d928b1-d706-4713-8da5-3ab41575b91a",
+    "firstName": "dejan1",
+    "lastName": "zivkovic1",
+    "password": "abc123"
+}
 
 ### get places
 GET http://localhost:3000/places

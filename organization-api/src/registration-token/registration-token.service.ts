@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateRegistrationTokenRequestDto } from './dtos/CreateRegistrationTokenRequestDto';
 import { RegistrationTokenDto } from './dtos/RegistrationTokenDto';
 import { RegistrationTokenRepository } from 'src/infrastructure/repositories/registrationCodeRepository';
@@ -10,6 +10,16 @@ export class RegistrationTokenService {
 
     constructor(private registrationTokenRepository: RegistrationTokenRepository){
 
+    }
+
+    async getByToken(token: string): Promise<RegistrationTokenDto>{
+        const registrationToken = await this.registrationTokenRepository.getByToken(token);
+
+        if (!registrationToken){
+            throw new NotFoundException('registrationToken not found');
+        }
+
+        return registrationTokenModelToDto(registrationToken);
     }
 
     async create(request: CreateRegistrationTokenRequestDto): Promise<RegistrationTokenDto> {

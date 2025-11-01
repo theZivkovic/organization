@@ -4,6 +4,8 @@ import { UserDto, UserRoleDto } from './dtos/userDto';
 import { userModelToDto } from './converters/userConverter';
 import { RegistrationTokenService } from 'src/registration-token/registration-token.service';
 import { UserRole } from 'src/infrastructure/models/userModel';
+import { RegisterRequestDto } from './dtos/registerRequestDto';
+import { generateSaltAndHash } from 'src/utils/passwordHelper';
 
 @Injectable()
 export class UsersService {
@@ -25,7 +27,7 @@ export class UsersService {
         return this.userRepository.validate(email, password);
     }
 
-    async register(request: { issuingUserId: string, toUserEmail: string, toUserRole: UserRoleDto })
+    async recreateRegistrationToken(request: { issuingUserId: string, toUserEmail: string, toUserRole: UserRoleDto })
     {
         const toUser = await this.userRepository.getByEmail(request.toUserEmail) 
         ?? await this.userRepository.create({
@@ -39,5 +41,22 @@ export class UsersService {
         });
 
         return { registrationToken, toUser };
+    }
+
+    async register(request: RegisterRequestDto){
+        const registrationToken = await this.registrationTokenService.getByToken(request.token);
+
+        const { hash, salt } = await generateSaltAndHash(request.password);
+        const updatedUser = await this.userRepository.update(
+            registrationToken.toUserId,
+            {
+                firstName: request.firstName,
+                lastName: request.lastName,
+                passwordHash: hash,
+                passwordSalt: salt
+            }
+        );
+
+        return updatedUser;
     }
 }

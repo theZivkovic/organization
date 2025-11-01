@@ -22,6 +22,15 @@ export class UserRepository {
     return createdUser.toObject() as User;
   }
 
+  async update(id: string, request: Partial<Omit<User, "_id">>): Promise<User>{
+    await this.userModel.updateOne({ _id: id}, request).exec();
+    const updatedUser = await this.userModel.findOne({ _id: id }).exec();
+    if (!updatedUser) {
+      throw new Error("Failed to fetch updated user");
+    }
+    return updatedUser.toObject() as User;
+  }
+
   async validate(email: string, rawPassword: string): Promise<boolean> {
     const user = await this.userModel.findOne({email}).exec();
 

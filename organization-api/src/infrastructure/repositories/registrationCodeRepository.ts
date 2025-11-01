@@ -7,6 +7,10 @@ import { RegistrationToken } from "../models/registrationTokenModel";
 export class RegistrationTokenRepository {
   constructor(@InjectModel(RegistrationToken.name) private registrationTokenModel: Model<RegistrationToken>) {}
 
+  getByToken(token: string){
+    return this.registrationTokenModel.findOne({ token}).exec();
+  }
+
   async create(request: Omit<RegistrationToken, 'id' | '_id'>) {
     const document = await this.registrationTokenModel.create(request);
     return {...request, _id: document._id};
