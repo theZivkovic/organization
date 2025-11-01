@@ -18,4 +18,13 @@ export class UserPlaceRepository {
   getAllForPlaces(placeIds: Array<string>): Promise<Array<UserPlace>> {
     return this.userPlaceModel.find({ placeId: { $in: placeIds }}).exec();
   }
+
+  async create(userId: string, placeId: string): Promise<UserPlace> {
+    const document = await this.userPlaceModel.create({ userId, placeId});
+    const createdUserPlace = await this.userPlaceModel.findOne({ _id: document._id }).exec();
+    if (!createdUserPlace) {
+      throw new Error("Failed to fetch created userPlace");
+    }
+    return createdUserPlace.toObject() as UserPlace;
+  }
 }

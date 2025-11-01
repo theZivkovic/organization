@@ -22,8 +22,7 @@ export class UserRepository {
     return (await this.userModel.find( {_id: { $in: ids}}).exec());
   }
 
-  async create(request: Partial<Omit<User, "_id">>): Promise<User>
-  {
+  async create(request: Partial<Omit<User, "_id">>): Promise<User> {
     const document = await this.userModel.create(request);
     const createdUser = await this.userModel.findOne({ _id: document._id }).exec();
     if (!createdUser) {

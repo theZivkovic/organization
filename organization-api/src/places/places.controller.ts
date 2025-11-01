@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards, Request, Param } from '@nestjs/common';
+import { Controller, Get, UseGuards, Request, Param, Delete } from '@nestjs/common';
 import { RoleGuard } from 'src/auth/auth.guard';
 import { PlacesService } from './places.service';
 import { UserRoleDto } from 'src/users/dtos/userDto';

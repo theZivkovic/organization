@@ -9,6 +9,7 @@ import { UserPlaceRepository } from 'src/infrastructure/repositories/userPlaceRe
 import { UserPlace, UserPlaceSchema } from 'src/infrastructure/models/userPlaceModel';
 import { UserRepository } from 'src/infrastructure/repositories/userRepository';
 import { User, UserSchema } from 'src/infrastructure/models/userModel';
+import { UserPlacesController } from './userPlacesController';
 
 @Module({
   imports: [
@@ -19,7 +20,7 @@ import { User, UserSchema } from 'src/infrastructure/models/userModel';
     ]),
     ConfigModule.forRoot()
   ],
-  controllers: [PlacesController],
+  controllers: [PlacesController, UserPlacesController],
   providers: [PlacesService, PlaceRepository, UserPlaceRepository, UserRepository]
 })
 export class PlacesModule {}
