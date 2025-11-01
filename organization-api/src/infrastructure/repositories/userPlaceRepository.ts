@@ -9,7 +9,6 @@ export class UserPlaceRepository {
 
 
   getAllForUser(userId: string): Promise<Array<UserPlace>> {
-    console.log('?????', userId);
     return this.userPlaceModel.find({ userId }).exec();
   };
 }

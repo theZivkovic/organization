@@ -7,6 +7,17 @@ Content-Type: application/json
     "password": "SomePassword123!"
 }
 
+### register
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+    "email": "dejan.zivkovic92@gmail.com",
+    "password": "SomePassword123!",
+    "firstName": "Dejan1",
+    "lastName": "Zivkovic1",
+    "role": "EMPLOYEE"
+}
 
 ### me
 GET http://localhost:3000/users/me
