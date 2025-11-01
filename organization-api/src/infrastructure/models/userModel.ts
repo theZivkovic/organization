@@ -13,23 +13,19 @@ export class User {
   @Prop({ type: MongooseSchema.Types.ObjectId, auto: true })
   _id: MongooseSchema.Types.ObjectId;
 
-  get id() {
-    return this._id;
-  }
-
   @Prop({required: true})
   email: string;
 
-  @Prop({required: true})
+  @Prop()
   firstName: string;
 
-  @Prop({required: true})
+  @Prop()
   lastName: string;
 
-  @Prop({required: true})
+  @Prop()
   passwordHash: string;
 
-  @Prop({required: true})
+  @Prop()
   passwordSalt: string;
 
   @Prop({required: true, enum: UserRole})

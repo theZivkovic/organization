@@ -8,15 +8,13 @@ Content-Type: application/json
 }
 
 ### register
-POST http://localhost:3000/auth/register
+POST http://localhost:3000/users/registration-tokens
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA1ZTU3ZGNkZTg3ZTY0ODhiMTgyZjQiLCJ1c2VyUm9sZSI6Ik1BTkFHRVIiLCJpYXQiOjE3NjIwMTMzNzYsImV4cCI6MTc2MjAxNjk3Nn0.HRLcwPCuJBBHVFVgc7robm2CoJuDeSYdq8HiV9xDZpQ
 
 {
-    "email": "dejan.zivkovic92@gmail.com",
-    "password": "SomePassword123!",
-    "firstName": "Dejan1",
-    "lastName": "Zivkovic1",
-    "role": "EMPLOYEE"
+    "toUserEmail": "dejan.zivkovic92@gmail.com",
+    "toUserRole": "EMPLOYEE"
 }
 
 ### me

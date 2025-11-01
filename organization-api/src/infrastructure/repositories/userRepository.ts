@@ -12,26 +12,14 @@ export class UserRepository {
     return this.userModel.findOne({ email }).exec();
   };
 
-  async create({email, firstName, lastName, password, role}: {
-    email: string,
-    firstName: string,
-    lastName: string,
-    password: string,
-    role: string
-  }) {
-    const { salt, hash } = await generateSaltAndHash(password);
-
-    const newUser: Omit<User, 'id' | '_id'> = {
-        email,
-        passwordHash: hash,
-        passwordSalt: salt,
-        firstName,
-        lastName,
-        role: role as UserRole
+  async create(request: Partial<Omit<User, "_id">>): Promise<User>
+  {
+    const document = await this.userModel.create(request);
+    const createdUser = await this.userModel.findOne({ _id: document._id }).exec();
+    if (!createdUser) {
+      throw new Error("Failed to fetch created user");
     }
-    
-    await this.userModel.create(newUser);
-    return newUser;
+    return createdUser.toObject() as User;
   }
 
   async validate(email: string, rawPassword: string): Promise<boolean> {
