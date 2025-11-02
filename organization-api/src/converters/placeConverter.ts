@@ -1,9 +1,9 @@
-import { Place } from "src/infrastructure/models/placeModel";
+import { MongoosePlace } from "src/infrastructure/models/placeModel";
 import { AssociationDto } from "src/dtos/associationDto";
 import { UserDto } from "src/dtos/userDto";
 import { PlaceDto, PlaceFullDto, PlaceTypeDto } from "src/dtos/placeDto";
 
-export function placeModelToDto(place: Place): PlaceDto {
+export function placeModelToDto(place: MongoosePlace): PlaceDto {
     return {
         id: place._id.toString(),
         name: place.name,

@@ -7,9 +7,8 @@ export enum PlaceType {
     STORE = "STORE"
 };
 
-@Schema()
-export class Place {
-
+@Schema({ collection: 'places' })
+export class MongoosePlace {
 
   @Prop({ type: MongooseSchema.Types.ObjectId, auto: true })
   _id: MongooseSchema.Types.ObjectId;
@@ -27,4 +26,4 @@ export class Place {
   right: number;
 }
 
-export const PlaceSchema = SchemaFactory.createForClass(Place);
+export const MongoosePlaceSchema = SchemaFactory.createForClass(MongoosePlace);

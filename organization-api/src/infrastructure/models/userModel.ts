@@ -7,8 +7,8 @@ export enum UserRole {
     EMPLOYEE = "EMPLOYEE"
 }
 
-@Schema()
-export class User {
+@Schema({ collection: 'users' })
+export class MongooseUser {
 
   @Prop({ type: MongooseSchema.Types.ObjectId, auto: true })
   _id: MongooseSchema.Types.ObjectId;
@@ -33,4 +33,4 @@ export class User {
 
 }
 
-export const UserSchema = SchemaFactory.createForClass(User);
+export const MongooseUserSchema = SchemaFactory.createForClass(MongooseUser);

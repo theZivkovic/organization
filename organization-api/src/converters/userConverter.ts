@@ -1,7 +1,7 @@
 import { UserDto, UserRoleDto } from "src/dtos/userDto";
-import { User } from "src/infrastructure/models/userModel";
+import { MongooseUser } from "src/infrastructure/models/userModel";
 
-export function userModelToDto(user: User): UserDto{
+export function userModelToDto(user: MongooseUser): UserDto{
     return {
         id: user._id.toString(),
         email: user.email,

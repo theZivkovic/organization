@@ -1,22 +1,28 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
-import { Association } from "../models/associationModel";
+import {  MongooseAssociation } from "../models/associationModel";
+import { Association } from "src/core/entities/association";
+import { mapToAssociation } from "../mappers/mongooseModelMappers";
+import { IAssociationRepository } from "src/application/interfaces/associationRepository";
 
 @Injectable()
-export class AssociationRepository {
-  constructor(@InjectModel(Association.name) private associationModel: Model<Association>) {}
+export class AssociationRepository implements IAssociationRepository {
+  constructor(@InjectModel(MongooseAssociation.name) private associationModel: Model<MongooseAssociation>) {}
 
-  get(userId: string, placeId: string): Promise<Association | null> {
-    return this.associationModel.findOne({ userId, placeId }).exec();
+  async get(userId: string, placeId: string): Promise<Association | null> {
+    const dbAssociation = await this.associationModel.findOne({ userId, placeId }).exec();
+    return mapToAssociation(dbAssociation?.toObject() as MongooseAssociation);
   }
 
-  getForUser(userId: string): Promise<Association | null> {
-    return this.associationModel.findOne({ userId }).exec();
+  async getForUser(userId: string): Promise<Association | null> {
+    const dbAssociation = await this.associationModel.findOne({ userId }).exec();
+    return mapToAssociation(dbAssociation?.toObject() as MongooseAssociation);
   };
 
-  getAllForPlaces(placeIds: Array<string>): Promise<Array<Association>> {
-    return this.associationModel.find({ placeId: { $in: placeIds }}).exec();
+  async getAllForPlaces(placeIds: Array<string>): Promise<Array<Association>> {
+    const dbAssociations = await this.associationModel.find({ placeId: { $in: placeIds }}).exec();
+    return dbAssociations.map(x => mapToAssociation(x?.toObject() as MongooseAssociation));
   }
 
   async create(userId: string, placeId: string): Promise<Association> {
@@ -26,7 +32,7 @@ export class AssociationRepository {
     if (!createdAssociation) {
       throw new Error("Failed to fetch created association");
     }
-    return createdAssociation.toObject() as Association;
+    return mapToAssociation(createdAssociation?.toObject() as MongooseAssociation);
   }
 
   async delete(userId: string, placeId: string) {

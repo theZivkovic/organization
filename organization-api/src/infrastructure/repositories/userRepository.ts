@@ -1,27 +1,35 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
-import { User, UserRole } from "../models/userModel";
 import { comparePassword } from "src/utils/passwordHelper";
+import { IUserRepository } from "src/application/interfaces/userRepository";
+import { MongooseUser } from "../models/userModel";
+import { User } from "src/core/entities/user";
+import { UserRole } from "src/core/enums/userRole";
+import { mapToUser } from "../mappers/mongooseModelMappers";
 
 @Injectable()
-export class UserRepository {
-  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
+export class UserRepository implements IUserRepository {
+  constructor(@InjectModel(MongooseUser.name) private userModel: Model<MongooseUser>) {}
 
-  getByEmail(email: string): Promise<User | null> {
-    return this.userModel.findOne({ email }).exec();
+  async getByEmail(email: string): Promise<User | null> {
+    const dbUser = await this.userModel.findOne({ email }).exec();
+    return mapToUser(dbUser?.toObject() as MongooseUser);
   };
 
-  getById(id: string): Promise<User | null> {
-    return this.userModel.findById(id).exec();
+  async getById(id: string): Promise<User | null> {
+    const dbUser = await this.userModel.findById(id).exec();
+    return mapToUser(dbUser?.toObject() as MongooseUser);
   };
 
   async getAllByIds(ids: Array<string>): Promise<Array<User>> {
-    return (await this.userModel.find( {_id: { $in: ids}}).exec());
+    const dbUsers = await this.userModel.find( {_id: { $in: ids}}).exec();
+    return dbUsers.map(x => mapToUser(x?.toObject() as MongooseUser));
   }
 
   async getAllByIdsWithRole(ids: Array<string>, role: UserRole): Promise<Array<User>> {
-    return (await this.userModel.find( {_id: { $in: ids}, role}).exec());
+     const dbUsers = await this.userModel.find( {_id: { $in: ids}, role}).exec();
+     return dbUsers.map(x => mapToUser(x?.toObject() as MongooseUser));
   }
 
   async create(request: Partial<Omit<User, "_id">>): Promise<User> {
@@ -30,7 +38,7 @@ export class UserRepository {
     if (!createdUser) {
       throw new Error("Failed to fetch created user");
     }
-    return createdUser.toObject() as User;
+    return mapToUser(createdUser?.toObject() as MongooseUser);
   }
 
   async update(id: string, request: Partial<Omit<User, "_id">>): Promise<User>{
@@ -39,10 +47,10 @@ export class UserRepository {
     if (!updatedUser) {
       throw new Error("Failed to fetch updated user");
     }
-    return updatedUser.toObject() as User;
+    return mapToUser(updatedUser?.toObject() as MongooseUser);
   }
 
-  async validate(email: string, rawPassword: string): Promise<boolean> {
+  async validateCredentials(email: string, rawPassword: string): Promise<boolean> {
     const user = await this.userModel.findOne({email}).exec();
 
     if (!user) {

@@ -1,9 +1,9 @@
-import { Association } from "src/infrastructure/models/associationModel";
+import { MongooseAssociation } from "src/infrastructure/models/associationModel";
 import { AssociationDto, AssociationFullDto } from "../dtos/associationDto";
 import { UserDto } from "src/dtos/userDto";
 import { PlaceDto } from "src/dtos/placeDto";
 
-export function associationModelToDto(association: Association): AssociationDto {
+export function associationModelToDto(association: MongooseAssociation): AssociationDto {
     return {
        userId: association.userId,
        placeId: association.placeId

@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
+import { ConflictException, Inject, Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
 import { UserRepository } from 'src/infrastructure/repositories/userRepository';
 import { UserDto, UserRoleDto } from '../dtos/userDto';
 import { UserRole } from 'src/infrastructure/models/userModel';
@@ -6,45 +6,19 @@ import { RegisterRequestDto } from '../dtos/registerRequestDto';
 import { generateSaltAndHash } from 'src/utils/passwordHelper';
 import { RegistrationTokenService } from './registration-token.service';
 import { userModelToDto } from 'src/converters/userConverter';
+import { IUserRepository } from 'src/application/interfaces/userRepository';
+import { User } from 'src/core/entities/user';
 
 @Injectable()
 export class UsersService {
-    constructor(private userRepository: UserRepository, private registrationTokenService: RegistrationTokenService) {
+    constructor(
+        @Inject(IUserRepository) private readonly userRepository: IUserRepository, 
+        private registrationTokenService: RegistrationTokenService) {
 
-    }
-
-    async getUserByEmail(email: string): Promise<UserDto> {
-        const foundUser = await this.userRepository.getByEmail(email);
-
-        if (!foundUser){
-            throw new NotFoundException(`User: ${email} not found`);
-        }
-
-        return userModelToDto(foundUser);
-    }
-
-    async getUserById(id: string): Promise<UserDto> {
-        const foundUser = await this.userRepository.getById(id);
-
-        if (!foundUser){
-            throw new NotFoundException(`User: ${id} not found`);
-        }
-
-        return userModelToDto(foundUser);
-    }
-
-    async getUsersByIds(ids: Array<string>): Promise<Array<UserDto>> {
-        return (await this.userRepository.getAllByIds(ids))
-        .map(x => userModelToDto(x));
-    }
-
-    async getUsersByIdsWithRole(ids: Array<string>, role: UserRoleDto): Promise<Array<UserDto>> {
-        return (await this.userRepository.getAllByIdsWithRole(ids, role as unknown as UserRole))
-        .map(x => userModelToDto(x));
     }
 
     async validate(email: string, password: string): Promise<boolean> {
-        return this.userRepository.validate(email, password);
+        return this.userRepository.validateCredentials(email, password);
     }
 
     async recreateRegistrationToken(request: { issuingUserId: string, toUserEmail: string, toUserRole: UserRoleDto })
@@ -57,7 +31,7 @@ export class UsersService {
 
         const registrationToken = await this.registrationTokenService.create({
             issuingUserId: request.issuingUserId,
-            toUserId: toUser?._id.toString(),
+            toUserId: toUser?.id.toString(),
         });
 
         return { registrationToken, toUser };

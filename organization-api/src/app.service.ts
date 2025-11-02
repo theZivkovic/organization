@@ -5,7 +5,7 @@ import { PlaceRepository } from './infrastructure/repositories/placeRepository';
 @Injectable()
 export class AppService {
 
-  constructor(private configService: ConfigService, private placeRepository: PlaceRepository) {
+  constructor(private configService: ConfigService) {
     
   }
   

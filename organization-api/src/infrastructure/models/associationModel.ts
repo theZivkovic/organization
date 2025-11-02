@@ -1,8 +1,8 @@
 
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
-@Schema()
-export class Association {
+@Schema({ collection: 'associations' })
+export class MongooseAssociation {
   @Prop({required: true})
   userId: string;
 
@@ -10,4 +10,4 @@ export class Association {
   placeId: string;
 }
 
-export const AssociationSchema = SchemaFactory.createForClass(Association);
+export const MongooseAssociationSchema = SchemaFactory.createForClass(MongooseAssociation);

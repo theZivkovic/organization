@@ -1,7 +1,7 @@
 import { Controller, UseGuards, Get, Request, Post, Body } from '@nestjs/common';
-import { UserRoleDto } from '../dtos/userDto';
-import { UsersService } from '../services/users.service';
-import type { RegisterRequestDto } from '../dtos/registerRequestDto';
+import { UserRoleDto } from '../../dtos/userDto';
+import { UsersService } from '../../services/users.service';
+import type { RegisterRequestDto } from '../../dtos/registerRequestDto';
 import { RoleGuard } from 'src/guards/auth.guard';
 
 @Controller('users')
