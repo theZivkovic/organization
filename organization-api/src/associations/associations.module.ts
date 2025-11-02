@@ -26,6 +26,10 @@ import { RegistrationToken, RegistrationTokenSchema } from 'src/infrastructure/m
     ConfigModule.forRoot()
   ],
   controllers: [AssociationsController],
-  providers: [AssociationsService, AssociationRepository, PlacesService, PlaceRepository, UsersService, UserRepository, RegistrationTokenService, RegistrationTokenRepository]
+  providers: [
+    AssociationsService, AssociationRepository, 
+    PlacesService, PlaceRepository, 
+    UsersService, UserRepository, 
+    RegistrationTokenService, RegistrationTokenRepository]
 })
 export class AssociationsModule {}

@@ -2,20 +2,21 @@ import { Controller, UseGuards, Request, Param, Delete, Post } from '@nestjs/com
 import { RoleGuard } from '../auth/auth.guard';
 import { PlacesService } from '../places/places.service';
 import { UserRoleDto } from 'src/users/dtos/userDto';
+import { AssociationsService } from './associations.service';
 
 @Controller('places')
 export class AssociationsController {
-    constructor(private placesService: PlacesService) {}
+    constructor(private associationsService: AssociationsService) {}
     
       @UseGuards(RoleGuard([UserRoleDto.MANAGER]))
       @Post('/:placeId/users/:userId')
       addUserToAPlace(@Request() req, @Param('placeId') placeId: string, @Param('userId') userId: string) {
-        return this.placesService.addUserToAPlace(req.user.userId, userId, placeId);
+        return this.associationsService.addUserToAPlace(req.user.userId, userId, placeId);
       }
 
       @UseGuards(RoleGuard([UserRoleDto.MANAGER]))
       @Delete('/:placeId/users/:userId')
       removeUserFromAPlace(@Request() req, @Param('placeId') placeId: string, @Param('userId') userId: string) {
-        return this.placesService.removeUserToAPlace(req.user.userId, userId, placeId);
+        return this.associationsService.removeUserToAPlace(req.user.userId, userId, placeId);
       }
 }
