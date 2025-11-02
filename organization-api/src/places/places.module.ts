@@ -5,22 +5,22 @@ import { PlacesService } from './places.service';
 import { PlaceRepository } from 'src/infrastructure/repositories/placeRepository';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Place, PlaceSchema } from 'src/infrastructure/models/placeModel';
-import { UserPlaceRepository } from 'src/infrastructure/repositories/userPlaceRepository';
-import { UserPlace, UserPlaceSchema } from 'src/infrastructure/models/userPlaceModel';
+import { AssociationRepository } from 'src/infrastructure/repositories/associationRepository';
+import { Association, AssociationSchema } from 'src/infrastructure/models/associationModel';
 import { UserRepository } from 'src/infrastructure/repositories/userRepository';
 import { User, UserSchema } from 'src/infrastructure/models/userModel';
-import { UserPlacesController } from './userPlacesController';
+import { AssociationsController } from './associationsController';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: Place.name, schema: PlaceSchema },
-      { name: UserPlace.name, schema: UserPlaceSchema},
+      { name: Association.name, schema: AssociationSchema},
       { name: User.name, schema: UserSchema}
     ]),
     ConfigModule.forRoot()
   ],
-  controllers: [PlacesController, UserPlacesController],
-  providers: [PlacesService, PlaceRepository, UserPlaceRepository, UserRepository]
+  controllers: [PlacesController, AssociationsController],
+  providers: [PlacesService, PlaceRepository, AssociationRepository, UserRepository]
 })
 export class PlacesModule {}

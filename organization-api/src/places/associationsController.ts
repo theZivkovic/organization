@@ -1,10 +1,10 @@
-import { Controller, Get, UseGuards, Request, Param, Delete, Post } from '@nestjs/common';
+import { Controller, UseGuards, Request, Param, Delete, Post } from '@nestjs/common';
 import { RoleGuard } from 'src/auth/auth.guard';
 import { PlacesService } from './places.service';
 import { UserRoleDto } from 'src/users/dtos/userDto';
 
 @Controller('places')
-export class UserPlacesController {
+export class AssociationsController {
     constructor(private placesService: PlacesService) {}
     
       @UseGuards(RoleGuard([UserRoleDto.MANAGER]))

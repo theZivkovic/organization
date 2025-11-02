@@ -1,12 +1,11 @@
 import { User } from "../models/userModel";
 import { Place } from "../models/placeModel";
-import { UserPlace } from "../models/userPlaceModel";
+import { Association } from "../models/associationModel";
 
-export async function seedUserPlaces() {
+export async function seedAssociations() {
     const mainPlace = await Place.findOne({ name: 'Srbija' }).exec();
     const mainManager = await User.findOne({ email: process.env.MAIN_MANAGER_EMAIL as string}).exec();
 
-    console.log('!!!', mainManager, mainPlace);
     if (!mainPlace){
         throw new Error('missing place with name: Srbija to seed userPlaces');
     }
@@ -15,18 +14,18 @@ export async function seedUserPlaces() {
         throw new Error(`missing user with email: ${process.env.MAIN_MANAGER_EMAIL} to seed userPlaces`);
     }
 
-    if (await UserPlace.exists({ 
+    if (await Association.exists({ 
         userId: mainManager.id,
         placeId: mainPlace.id
     }).exec()) {
         return;
     }
 
-    const mainManagerToMainPlace = new UserPlace({
+    const mainAssociation = new Association({
         userId: mainManager.id,
         placeId: mainPlace.id
     });
 
-    await mainManagerToMainPlace.save();
+    await mainAssociation.save();
     console.log(`Added main manager to main place.`);
 }

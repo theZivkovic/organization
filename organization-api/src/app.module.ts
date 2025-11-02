@@ -10,8 +10,8 @@ import { UsersModule } from './users/users.module';
 import { UsersController } from './users/users.controller';
 import { PlacesService } from './places/places.service';
 import { PlacesModule } from './places/places.module';
-import { UserPlaceRepository } from './infrastructure/repositories/userPlaceRepository';
-import { UserPlace, UserPlaceSchema } from './infrastructure/models/userPlaceModel';
+import { AssociationRepository } from './infrastructure/repositories/associationRepository';
+import { Association, AssociationSchema } from './infrastructure/models/associationModel';
 import { RegistrationTokenModule } from './registration-token/registration-token.module';
 import { UsersService } from './users/users.service';
 import { UserRepository } from './infrastructure/repositories/userRepository';
@@ -25,7 +25,7 @@ import { RegistrationToken, RegistrationTokenSchema } from './infrastructure/mod
       MongooseModule.forRoot(process.env.MONGO_URL as string),
       MongooseModule.forFeature([
         { name: Place.name, schema: PlaceSchema},
-        { name: UserPlace.name, schema: UserPlaceSchema },
+        { name: Association.name, schema: AssociationSchema },
         { name: User.name, schema: UserSchema },
         { name: RegistrationToken.name, schema: RegistrationTokenSchema }
       ]),
@@ -36,7 +36,7 @@ import { RegistrationToken, RegistrationTokenSchema } from './infrastructure/mod
       RegistrationTokenModule,
   ],
   controllers: [AppController, UsersController],
-  providers: [AppService, PlaceRepository, UserPlaceRepository, PlacesService, UsersService, UserRepository, RegistrationTokenService, RegistrationTokenRepository],
+  providers: [AppService, PlaceRepository, AssociationRepository, PlacesService, UsersService, UserRepository, RegistrationTokenService, RegistrationTokenRepository],
 })
 
 export class AppModule {}

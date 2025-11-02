@@ -2,7 +2,7 @@ import { connect, Mongoose } from 'mongoose';
 
 import { seedPlaces } from './seeders/placeSeeder';
 import { seedUsers } from './seeders/userSeeder';
-import { seedUserPlaces } from './seeders/userPlaceSeeder';
+import { seedAssociations } from './seeders/associationsSeeder';
 
 async function run() {
     let connection: Mongoose | undefined = undefined;
@@ -12,7 +12,7 @@ async function run() {
             seedPlaces(),
             seedUsers()
         ]);
-        await seedUserPlaces();
+        await seedAssociations();
     } catch (error) {
         console.error('MongoDB connection or operation error:', error);
     } finally {

@@ -1,13 +1,8 @@
 
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
-export enum PlaceType {
-    OFFICE = "OFFICE",
-    STORE = "STORE"
-};
-
 @Schema()
-export class UserPlace {
+export class Association {
   @Prop({required: true})
   userId: string;
 
@@ -15,4 +10,4 @@ export class UserPlace {
   placeId: string;
 }
 
-export const UserPlaceSchema = SchemaFactory.createForClass(UserPlace);
+export const AssociationSchema = SchemaFactory.createForClass(Association);

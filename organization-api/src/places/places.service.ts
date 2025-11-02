@@ -1,68 +1,52 @@
 import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { PlaceRepository } from 'src/infrastructure/repositories/placeRepository';
-import { placeModelToDto, placeModelToFullDto } from './converters/placeConverter';
-import { UserPlaceRepository } from 'src/infrastructure/repositories/userPlaceRepository';
+import { placeModelToFullDto } from './converters/placeConverter';
+import { AssociationRepository } from 'src/infrastructure/repositories/associationRepository';
 import { UserRepository } from 'src/infrastructure/repositories/userRepository';
 import { PlaceFullDto } from './dtos/placeFullDto';
-import { userModelToDto } from 'src/users/converters/userConverter';
+import { Place } from 'src/infrastructure/models/placeModel';
 
 @Injectable()
 export class PlacesService {
-    constructor(private placeRepository: PlaceRepository, private userPlaceRepository: UserPlaceRepository, private userRepository: UserRepository) {
-
+    constructor(
+        private placeRepository: PlaceRepository, 
+        private associationRepository: AssociationRepository, 
+        private userRepository: UserRepository) {
     }
 
     async getPlacesForUser(userId: string): Promise<Array<PlaceFullDto>> {
-        const usersWorkplace = await this.userPlaceRepository.getForUser(userId);
+        const userAssociation = await this.associationRepository.getForUser(userId);
 
-        if (!usersWorkplace) {
-            throw new NotFoundException('User not assigned to a place');
+        if (!userAssociation) {
+            throw new NotFoundException(`User: ${userId} not associated to any place`);
         }
 
-        const placeWhereUserWorks = await this.placeRepository.getById(usersWorkplace.placeId);
-
-        if (!placeWhereUserWorks) {
-            throw new NotFoundException('Place not found');
-        }
-
-        const placeDescendants = await this.placeRepository.getAllDescendants(placeWhereUserWorks);
-
-        const allPlaces = [...placeDescendants, placeWhereUserWorks];
-        const allUserPlaces = await this.userPlaceRepository.getAllForPlaces(allPlaces.map(x => x._id.toString()));
-        const allUsers = await this.userRepository.getAllByIds(allUserPlaces.map(x => x.userId));
-
-        return allPlaces.map(place => placeModelToFullDto(place, allUserPlaces, allUsers));
+        const placesVisibleByUser = await this.getPlaceWithDescendants(userAssociation.placeId);
+        return this.getPlacesFull(placesVisibleByUser);
     }
 
     async getPlaceForUser(userId: string, placeId: string): Promise<PlaceFullDto> {
 
-        const usersWorkplace = await this.userPlaceRepository.getForUser(userId);
-
-        if (!usersWorkplace) {
-            throw new NotFoundException('User not assigned to any place');
-        }
-
-        const placeWhereUserWorks = await this.placeRepository.getById(usersWorkplace.placeId);
-
-        if (!placeWhereUserWorks) {
-            throw new NotFoundException('Place not found');
-        }
-
-        const placeDescendants = await this.placeRepository.getAllDescendants(placeWhereUserWorks);
-
-        const placeToGet = [placeWhereUserWorks, ...placeDescendants].find(x => x._id.toString() === placeId);
-        if (!placeToGet) {
-            throw new UnauthorizedException('User is not allowed to see this place');
-        }
-
         const user = await this.userRepository.getById(userId);
-        const userPlacesToCheck = await this.userPlaceRepository.get(user!._id.toString(), placeToGet._id.toString());
-        
-        return placeModelToFullDto(
-            placeToGet, 
-            userPlacesToCheck ? [userPlacesToCheck]: [], 
-            user ? [user]: []
-        );
+
+        if (!user) {
+            throw new NotFoundException(`User: ${userId} not found`);
+        }
+
+        const userWorkplace = await this.associationRepository.getForUser(userId);
+
+        if (!userWorkplace) {
+            throw new NotFoundException(`User: ${user.email} not assigned to a work place`);
+        }
+
+        const placesVisibleByUser = await this.getPlaceWithDescendants(userWorkplace.placeId);
+
+        const placeToGet = placesVisibleByUser.find(x => x._id.toString() === placeId);
+        if (!placeToGet) {
+            throw new UnauthorizedException(`User ${userId} is not allowed to see the place: ${placeId}`);
+        }
+
+        return (await this.getPlacesFull([placeToGet]))[0];
     }
 
     async addUserToAPlace(managerUserId: string, userToAddId: string, placeId: string){
@@ -79,36 +63,29 @@ export class PlacesService {
             throw new NotFoundException('Place not found');
         }
 
-        const userToAddWorkplace = await this.userPlaceRepository.getForUser(userToAddId);
+        const userToAddAssociation = await this.associationRepository.getForUser(userToAddId);
         
-        if (userToAddWorkplace && userToAddWorkplace.placeId !== placeId){
-            throw new ConflictException(`User already works at place: ${userToAddWorkplace.placeId}, please unnasign them first`);
+        if (userToAddAssociation && userToAddAssociation.placeId !== placeId){
+            throw new ConflictException(`User already works at place: ${userToAddAssociation.placeId}, please unnasign them first`);
         }
 
-        if (userToAddWorkplace){
-            return placeModelToFullDto(place, [userToAddWorkplace], [userToAdd]);
+        if (userToAddAssociation){
+            return placeModelToFullDto(place, [userToAddAssociation], [userToAdd]);
         }
 
-        const managingUsersWorkplace = await this.userPlaceRepository.getForUser(managerUserId);
+        const managingUsersWorkplace = await this.associationRepository.getForUser(managerUserId);
 
         if (!managingUsersWorkplace){
             throw new NotFoundException('Logged in user is not assigned to any place');
         }
 
-        const managingUserPlace = await this.placeRepository.getById(managingUsersWorkplace.placeId);
+        const placesVisibleToManagingUser = await this.getPlaceWithDescendants(managingUsersWorkplace.placeId);
 
-        if (!managingUserPlace){
-            throw new NotFoundException('Place not found');
-        }
-
-        const placeDescendants = await this.placeRepository.getAllDescendants(managingUserPlace);
-
-        const allPlacesUnderManagingUser = [...placeDescendants, managingUserPlace];
-        if (!allPlacesUnderManagingUser.some(x => x._id.toString() === placeId)){
+        if (!placesVisibleToManagingUser.some(x => x._id.toString() === placeId)){
             throw new UnauthorizedException('Logged in user is not allowed to add users to this place');
         }
 
-        const createdUserPlace = await this.userPlaceRepository.create(userToAddId, placeId);
+        const createdUserPlace = await this.associationRepository.create(userToAddId, placeId);
 
         return placeModelToFullDto(place, [createdUserPlace], [userToAdd])
     }
@@ -127,31 +104,41 @@ export class PlacesService {
             throw new NotFoundException('Place not found');
         }
 
-        const userToRemoveWorkplace = await this.userPlaceRepository.getForUser(userToRemoveId);
+        const userToRemoveAssociation = await this.associationRepository.getForUser(userToRemoveId);
         
-        if (!userToRemoveWorkplace || userToRemoveWorkplace.placeId !== placeId ){
+        if (!userToRemoveAssociation || userToRemoveAssociation.placeId !== placeId ){
             throw new NotFoundException('User is not assigned to this place');
         }
 
-        const managingUsersWorkplace = await this.userPlaceRepository.getForUser(managerUserId);
+        const managingUserAssociation = await this.associationRepository.getForUser(managerUserId);
 
-        if (!managingUsersWorkplace){
+        if (!managingUserAssociation){
             throw new NotFoundException('Logged in user is not assigned to any place');
         }
 
-        const managingUserPlace = await this.placeRepository.getById(managingUsersWorkplace.placeId);
+        const placesVisibleToManagingUser = await this.getPlaceWithDescendants(managingUserAssociation.placeId);
 
-        if (!managingUserPlace){
-            throw new NotFoundException('Place not found');
-        }
-
-        const placeDescendants = await this.placeRepository.getAllDescendants(managingUserPlace);
-
-        const allPlacesUnderManagingUser = [...placeDescendants, managingUserPlace];
-        if (!allPlacesUnderManagingUser.some(x => x._id.toString() === placeId)){
+        if (!placesVisibleToManagingUser.some(x => x._id.toString() === placeId)){
             throw new UnauthorizedException('Logged in user is not allowed to remove users from this place');
         }
 
-        await this.userPlaceRepository.delete(userToRemoveId, placeId);
+        await this.associationRepository.delete(userToRemoveId, placeId);
+    }
+
+    private async getPlaceWithDescendants(placeId: string){
+        const place = await this.placeRepository.getById(placeId);
+
+        if (!place) {
+            throw new NotFoundException(`Place: ${placeId} not found`);
+        }
+
+        const placeDescendants = await this.placeRepository.getAllDescendants(place);
+        return [place, ...placeDescendants];
+    }
+
+    private async getPlacesFull(places: Array<Place>){
+        const associations = await this.associationRepository.getAllForPlaces(places.map(x => x._id.toString()));
+        const users = await this.userRepository.getAllByIds(associations.map(x => x.userId));
+        return places.map(place => placeModelToFullDto(place, associations, users));   
     }
 }
