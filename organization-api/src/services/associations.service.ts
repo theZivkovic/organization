@@ -80,7 +80,6 @@ export class AssociationsService {
 
     async removeUserFromAPlace(managerUserId: string, placesVisibleToManagingUser: Array<PlaceDto>, userToRemoveId: string, placeToRemoveFromId: string) {
         const userToRemoveAssociation = await this.getAssociationForUser(userToRemoveId);
-        
         if (userToRemoveAssociation.placeId !== placeToRemoveFromId ){
             throw new NotFoundException('User is not assigned to this place');
         }

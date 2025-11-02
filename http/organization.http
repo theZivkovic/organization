@@ -91,7 +91,14 @@ POST http://localhost:3000/places/{{placeSuboticaId}}/users/{{employeeUserId}}
 Content-Type: application/json
 Authorization: Bearer {{mainManagerAccessToken}}
 
-### remove user from a place
-DELETE http://localhost:3000/places/{{placeSerbiaId}}/users/{{employeeUserId}}
+### delete employee to a place: Subotica
+DELETE  http://localhost:3000/places/{{placeSerbiaId}}/users/{{employeeUserId}}
 Content-Type: application/json
 Authorization: Bearer {{mainManagerAccessToken}}
+
+### delete employee to a place: Subotica
+DELETE  http://localhost:3000/places/{{placeSuboticaId}}/users/{{employeeUserId}}
+Content-Type: application/json
+Authorization: Bearer {{mainManagerAccessToken}}
+
+
