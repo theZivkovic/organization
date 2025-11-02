@@ -1,8 +1,7 @@
 import { Place } from "src/infrastructure/models/placeModel";
 import { AssociationDto } from "src/dtos/associationDto";
 import { UserDto } from "src/dtos/userDto";
-import { PlaceDto, PlaceTypeDto } from "src/dtos/placeDto";
-import { PlaceFullDto } from "src/dtos/placeFullDto";
+import { PlaceDto, PlaceFullDto, PlaceTypeDto } from "src/dtos/placeDto";
 
 export function placeModelToDto(place: Place): PlaceDto {
     return {

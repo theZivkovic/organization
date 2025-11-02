@@ -3,33 +3,39 @@ import { RoleGuard } from '../guards/auth.guard';
 import { UserRoleDto } from 'src/dtos/userDto';
 import { AssociationsService } from 'src/services/associations.service';
 import { PlacesService } from 'src/services/places.service';
+import { UsersService } from 'src/services/users.service';
+import { placeModelToFullDto } from 'src/converters/placeConverter';
+import { associationModelToFullDto } from 'src/converters/associationsConverter';
 
 @Controller('places')
 export class AssociationsController {
     constructor(
       private associationsService: AssociationsService,
-      private placesService: PlacesService
+      private placesService: PlacesService,
+      private usersService: UsersService
     ) {}
     
       @UseGuards(RoleGuard([UserRoleDto.MANAGER]))
       @Post(':placeId/users/:userId')
-      async addUserToAPlace(@Request() req, @Param('placeId') placeId: string, @Param('userId') userId: string) {
-        const placesVisibleToManagingUser = await this.placesService.getPlaceWithDescendants(placeId);
-        return this.associationsService.addUserToAPlace(
+      async addUserToAPlace(@Request() req, @Param('placeId') placeToAddToId: string, @Param('userId') userToAddId: string) {
+        const userToAdd = await this.usersService.getUserById(userToAddId);
+        const placesVisibleToManagingUser = await this.placesService.getPlaceWithDescendants(placeToAddToId);
+        await this.associationsService.addUserToAPlace(
           req.user.userId,
           placesVisibleToManagingUser,
-          userId, 
-          placeId);
+          userToAddId, 
+          placeToAddToId);
+        return associationModelToFullDto(userToAdd, placesVisibleToManagingUser.find(x => x.id === placeToAddToId)!);
       }
 
       @UseGuards(RoleGuard([UserRoleDto.MANAGER]))
       @Delete(':placeId/users/:userId')
-      async removeUserFromAPlace(@Request() req, @Param('placeId') placeId: string, @Param('userId') userId: string) {
-        const placesVisibleToManagingUser = await this.placesService.getPlaceWithDescendants(placeId);
+      async removeUserFromAPlace(@Request() req, @Param('placeId') placeToRemoveFromId: string, @Param('userId') userToRemoveId: string) {
+        const placesVisibleToManagingUser = await this.placesService.getPlaceWithDescendants(placeToRemoveFromId);
         return this.associationsService.removeUserFromAPlace(
           req.user.userId,
           placesVisibleToManagingUser,
-          userId,
-          placeId);
+          userToRemoveId,
+          placeToRemoveFromId);
       }
 }

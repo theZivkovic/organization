@@ -1,10 +1,6 @@
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PlaceRepository } from 'src/infrastructure/repositories/placeRepository';
-import { UsersService } from 'src/services/users.service';
-import { AssociationsService } from './associations.service';
-import { PlaceFullDto } from 'src/dtos/placeFullDto';
-import { placeModelToDto, placeModelToFullDto } from 'src/converters/placeConverter';
-import { PlaceDto } from 'src/dtos/placeDto';
+import { placeModelToDto, } from 'src/converters/placeConverter';
 
 
 @Injectable()
