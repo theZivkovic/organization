@@ -13,7 +13,7 @@ export function placeModelToDto(place: Place): PlaceDto {
     };
 }
 
-export function placeModelToFullDto(placeDto: PlaceDto, associationsDtos: Array<AssociationDto>, usersDtos: Array<UserDto>): PlaceFullDto {
+export function placeToFullDto(placeDto: PlaceDto, associationsDtos: Array<AssociationDto>, usersDtos: Array<UserDto>): PlaceFullDto {
     const associationsForPlace = associationsDtos.filter(x => x.placeId === placeDto.id);
     const usersForPlace = usersDtos.filter(x => associationsForPlace.some(y => y.userId === x.id));
     return {

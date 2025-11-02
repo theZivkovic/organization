@@ -1,5 +1,5 @@
 import { Controller, Get, UseGuards, Request, Param, Delete, Query } from '@nestjs/common';
-import { placeModelToFullDto as placeToFullDto } from 'src/converters/placeConverter';
+import { placeToFullDto } from 'src/converters/placeConverter';
 import { UserRoleDto } from 'src/dtos/userDto';
 import { RoleGuard } from 'src/guards/auth.guard';
 import { AssociationsService } from 'src/services/associations.service';

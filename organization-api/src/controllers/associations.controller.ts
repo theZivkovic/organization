@@ -4,7 +4,6 @@ import { UserRoleDto } from 'src/dtos/userDto';
 import { AssociationsService } from 'src/services/associations.service';
 import { PlacesService } from 'src/services/places.service';
 import { UsersService } from 'src/services/users.service';
-import { placeModelToFullDto } from 'src/converters/placeConverter';
 import { associationModelToFullDto } from 'src/converters/associationsConverter';
 
 @Controller('places')
