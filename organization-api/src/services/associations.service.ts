@@ -1,10 +1,10 @@
 import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { AssociationRepository } from '../infrastructure/repositories/associationRepository';
-import { associationModelToDto } from './converters/associationsConverter';
-import type { AssociationDto } from './dtos/associationDto';
-import { UsersService } from '../users/users.service';
-import { PlacesService } from '../places/places.service';
-import { placeModelToFullDto } from 'src/places/converters/placeConverter';
+import { UsersService } from './users.service';
+import { PlacesService } from './places.service';
+import { AssociationDto } from 'src/dtos/associationDto';
+import { associationModelToDto } from 'src/converters/associationsConverter';
+import { placeModelToFullDto } from 'src/converters/placeConverter';
 
 @Injectable()
 export class AssociationsService {

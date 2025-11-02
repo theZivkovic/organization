@@ -1,10 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
-import { User, UserRole } from "../models/userModel";
-import { comparePassword, generateSaltAndHash } from "src/utils/passwordHelper";
-import { UserDto } from "src/users/dtos/userDto";
-import { userModelToDto } from "src/users/converters/userConverter";
+import { User } from "../models/userModel";
+import { comparePassword } from "src/utils/passwordHelper";
 
 @Injectable()
 export class UserRepository {

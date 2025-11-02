@@ -1,5 +1,5 @@
 
-import { UserDto } from "src/users/dtos/userDto"
+import { UserDto } from "src/dtos/userDto"
 import { PlaceDto } from "./placeDto"
 
 

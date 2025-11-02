@@ -1,5 +1,5 @@
 import { RegistrationToken } from "src/infrastructure/models/registrationTokenModel";
-import { RegistrationTokenDto } from "../dtos/RegistrationTokenDto";
+import { RegistrationTokenDto } from "../dtos/registrationTokenDto";
 
 
 export function registrationTokenModelToDto(token: RegistrationToken): RegistrationTokenDto {

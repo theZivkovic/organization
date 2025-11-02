@@ -1,5 +1,5 @@
+import { UserDto, UserRoleDto } from "src/dtos/userDto";
 import { User } from "src/infrastructure/models/userModel";
-import { UserDto, UserRoleDto } from "../dtos/userDto";
 
 export function userModelToDto(user: User): UserDto{
     return {

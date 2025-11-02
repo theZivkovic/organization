@@ -1,7 +1,7 @@
 import { Controller, Get, UseGuards, Request, Param, Delete } from '@nestjs/common';
-import { RoleGuard } from 'src/auth/auth.guard';
-import { PlacesService } from './places.service';
-import { UserRoleDto } from 'src/users/dtos/userDto';
+import { UserRoleDto } from 'src/dtos/userDto';
+import { RoleGuard } from 'src/guards/auth.guard';
+import { PlacesService } from 'src/services/places.service';
 
 @Controller('places')
 export class PlacesController {

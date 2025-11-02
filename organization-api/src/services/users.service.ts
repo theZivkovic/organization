@@ -1,11 +1,11 @@
 import { ConflictException, Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
 import { UserRepository } from 'src/infrastructure/repositories/userRepository';
-import { UserDto, UserRoleDto } from './dtos/userDto';
-import { userModelToDto } from './converters/userConverter';
-import { RegistrationTokenService } from 'src/registration-token/registration-token.service';
+import { UserDto, UserRoleDto } from '../dtos/userDto';
 import { UserRole } from 'src/infrastructure/models/userModel';
-import { RegisterRequestDto } from './dtos/registerRequestDto';
+import { RegisterRequestDto } from '../dtos/registerRequestDto';
 import { generateSaltAndHash } from 'src/utils/passwordHelper';
+import { RegistrationTokenService } from './registration-token.service';
+import { userModelToDto } from 'src/converters/userConverter';
 
 @Injectable()
 export class UsersService {

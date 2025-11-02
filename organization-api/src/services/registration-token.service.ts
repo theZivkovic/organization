@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateRegistrationTokenRequestDto } from './dtos/CreateRegistrationTokenRequestDto';
-import { RegistrationTokenDto } from './dtos/RegistrationTokenDto';
+import { registrationTokenModelToDto } from 'src/converters/registrationTokenConverter';
+import { CreateRegistrationTokenRequestDto } from 'src/dtos/createRegistrationTokenRequestDto';
+import { RegistrationTokenDto } from 'src/dtos/registrationTokenDto';
 import { RegistrationTokenRepository } from 'src/infrastructure/repositories/registrationCodeRepository';
 import { v4 as uuidv4 } from 'uuid';
-import { registrationTokenModelToDto } from './converters/registrationTokenConverter';
 
 @Injectable()
 export class RegistrationTokenService {
