@@ -17,7 +17,7 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
-    const user = (await this.usersService.getByEmail(request.email))!;
+    const user = (await this.usersService.getUserByEmail(request.email))!;
 
     const payload = { 
       userId: user.id,

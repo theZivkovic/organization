@@ -11,10 +11,10 @@ export class PlaceRepository {
     return this.placeModel.findById(id).exec();
   };
 
-  getAllDescendants(place: Place): Promise<Place[]> {
+  getAllDescendants(placeLeft: number, placeRight: number): Promise<Place[]> {
     return this.placeModel.find({ 
-        left: { $gte: place.left}, 
-        right: {$lt: place.right} 
+        left: { $gte: placeLeft}, 
+        right: {$lt: placeRight} 
     }).exec();
   }
 }

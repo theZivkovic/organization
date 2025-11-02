@@ -1,6 +1,6 @@
 import { Controller, UseGuards, Request, Param, Delete, Post } from '@nestjs/common';
-import { RoleGuard } from 'src/auth/auth.guard';
-import { PlacesService } from './places.service';
+import { RoleGuard } from '../auth/auth.guard';
+import { PlacesService } from '../places/places.service';
 import { UserRoleDto } from 'src/users/dtos/userDto';
 
 @Controller('places')

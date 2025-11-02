@@ -1,4 +1,17 @@
-### login
+### variables
+
+@mainManagerAccessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA1ZTU3ZGNkZTg3ZTY0ODhiMTgyZjQiLCJ1c2VyUm9sZSI6Ik1BTkFHRVIiLCJpYXQiOjE3NjIwODAwNTQsImV4cCI6MTc2MjA4MzY1NH0.2jGxuAdTStHEi0mH04LeufTv8G_l1o9nO-UiU3K1tdQ
+@employeeAccessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA2NWJlMWE1ZjBmMjJjMmY4OTNmM2IiLCJ1c2VyUm9sZSI6IkVNUExPWUVFIiwiaWF0IjoxNzYyMDgwMjc4LCJleHAiOjE3NjIwODM4Nzh9.Z-_EnJBRICXQK_xrOw6p2acZ-03YWozlUmtUOC8I3Zg
+@employeeUserId = 69065be1a5f0f22c2f893f3b
+
+@managerAccessToken = ""
+
+@registrationToken = 52c9a760-a0aa-434c-9182-5f9b764312f6
+
+@placeSerbiaId = 6905e57dcde87e6488b182c6
+@placeSuboticaId = 6905e57dcde87e6488b182c9
+
+### login main manager
 POST http://localhost:3000/auth/login
 Content-Type: application/json
 
@@ -7,7 +20,7 @@ Content-Type: application/json
     "password": "SomePassword123!"
 }
 
-### login 2
+### login employee
 POST http://localhost:3000/auth/login
 Content-Type: application/json
 
@@ -16,55 +29,59 @@ Content-Type: application/json
     "password": "abc123"
 }
 
-### me
+### get main manager
 GET http://localhost:3000/users/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA1ZTU3ZGNkZTg3ZTY0ODhiMTgyZjQiLCJ1c2VyUm9sZSI6Ik1BTkFHRVIiLCJpYXQiOjE3NjIwNzQxNDcsImV4cCI6MTc2MjA3Nzc0N30.NR2XjCajpCDnPpVVPJDCrJq5n7K1W6GiyM65r3n0UPc
+Authorization: Bearer {{mainManagerAccessToken}} 
+
+
+### get employee
+GET http://localhost:3000/users/me
+Authorization: Bearer {{employeeAccessToken}} 
 
 
 ### create registration token
 POST http://localhost:3000/users/registration-tokens
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA1ZTU3ZGNkZTg3ZTY0ODhiMTgyZjQiLCJ1c2VyUm9sZSI6Ik1BTkFHRVIiLCJpYXQiOjE3NjIwNzQxNDcsImV4cCI6MTc2MjA3Nzc0N30.NR2XjCajpCDnPpVVPJDCrJq5n7K1W6GiyM65r3n0UPc
+Authorization: Bearer {{mainManagerAccessToken}}
 
 {
     "toUserEmail": "dejan.zivkovic91@gmail.com",
     "toUserRole": "EMPLOYEE"
 }
 
-
 ### register
 POST http://localhost:3000/users/register
 Content-Type: application/json
 
 {
-    "token": "9938aa8b-75c7-4d71-a269-93bd78b12ab9",
-    "firstName": "dejan1",
-    "lastName": "zivkovic1",
+    "token": "{{registrationToken}}",
+    "firstName": "dejan2",
+    "lastName": "zivkovic2",
     "password": "abc123"
 }
 
-### get places
+### get places for manager
 GET http://localhost:3000/places
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA1ZTU3ZGNkZTg3ZTY0ODhiMTgyZjQiLCJ1c2VyUm9sZSI6Ik1BTkFHRVIiLCJpYXQiOjE3NjIwNzQxNDcsImV4cCI6MTc2MjA3Nzc0N30.NR2XjCajpCDnPpVVPJDCrJq5n7K1W6GiyM65r3n0UPc
+Authorization: Bearer {{mainManagerAccessToken}}
 
-### get place
-GET http://localhost:3000/places/6905e57dcde87e6488b182c6
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA1ZTU3ZGNkZTg3ZTY0ODhiMTgyZjQiLCJ1c2VyUm9sZSI6Ik1BTkFHRVIiLCJpYXQiOjE3NjIwNzQxNDcsImV4cCI6MTc2MjA3Nzc0N30.NR2XjCajpCDnPpVVPJDCrJq5n7K1W6GiyM65r3n0UPc
+### get places for employee
+GET http://localhost:3000/places
+Authorization: Bearer {{employeeAccessToken}}
 
-### add user to a place
-POST http://localhost:3000/places/6905e57dcde87e6488b182c6/users/69065be1a5f0f22c2f893f3b
+### get place: Srbija for main manager
+GET http://localhost:3000/places/{{placeSerbiaId}}
+Authorization: Bearer {{mainManagerAccessToken}}
+
+### add employee to a place: Srbija
+POST http://localhost:3000/places/{{placeSerbiaId}}/users/{{employeeUserId}}
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA1ZTU3ZGNkZTg3ZTY0ODhiMTgyZjQiLCJ1c2VyUm9sZSI6Ik1BTkFHRVIiLCJpYXQiOjE3NjIwNzQxNDcsImV4cCI6MTc2MjA3Nzc0N30.NR2XjCajpCDnPpVVPJDCrJq5n7K1W6GiyM65r3n0UPc
+Authorization: Bearer {{mainManagerAccessToken}}
 
 {
     
 }
 
 ### remove user from a place
-DELETE http://localhost:3000/places/6905e57dcde87e6488b182c9/users/69065be1a5f0f22c2f893f3b
+DELETE http://localhost:3000/places/{{placeSerbiaId}}/users/{{employeeUserId}}
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA1ZTU3ZGNkZTg3ZTY0ODhiMTgyZjQiLCJ1c2VyUm9sZSI6Ik1BTkFHRVIiLCJpYXQiOjE3NjIwMjYxMjMsImV4cCI6MTc2MjAyOTcyM30.aUQFNE_6SBfnft0MXLIAua7rsg0dwqevGUCLZa75I9k
-
-{
-    
-}
+Authorization: Bearer {{managerAccessToken}}

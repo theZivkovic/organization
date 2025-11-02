@@ -7,4 +7,6 @@ export type PlaceDto = {
     id: string;
     name: string;
     type: PlaceTypeDto;
+    left: number;
+    right: number;
 }

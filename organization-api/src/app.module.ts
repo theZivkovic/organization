@@ -19,6 +19,8 @@ import { RegistrationTokenService } from './registration-token/registration-toke
 import { RegistrationTokenRepository } from './infrastructure/repositories/registrationCodeRepository';
 import { User, UserSchema } from './infrastructure/models/userModel';
 import { RegistrationToken, RegistrationTokenSchema } from './infrastructure/models/registrationTokenModel';
+import { AssociationsModule } from './associations/associations.module';
+import { AssociationsService } from './associations/associations.service';
 
 @Module({
   imports: [
@@ -34,9 +36,15 @@ import { RegistrationToken, RegistrationTokenSchema } from './infrastructure/mod
       UsersModule,
       PlacesModule,
       RegistrationTokenModule,
+      AssociationsModule,
   ],
   controllers: [AppController, UsersController],
-  providers: [AppService, PlaceRepository, AssociationRepository, PlacesService, UsersService, UserRepository, RegistrationTokenService, RegistrationTokenRepository],
+  providers: [
+    AppService, 
+    PlaceRepository, PlacesService,
+    AssociationRepository, AssociationsService, 
+    UsersService, UserRepository, 
+    RegistrationTokenService, RegistrationTokenRepository],
 })
 
 export class AppModule {}

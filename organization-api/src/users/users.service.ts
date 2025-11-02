@@ -13,14 +13,29 @@ export class UsersService {
 
     }
 
-    async getByEmail(email: string): Promise<UserDto> {
+    async getUserByEmail(email: string): Promise<UserDto> {
         const foundUser = await this.userRepository.getByEmail(email);
 
         if (!foundUser){
-            throw new NotFoundException();
+            throw new NotFoundException(`User: ${email} not found`);
         }
 
         return userModelToDto(foundUser);
+    }
+
+    async getUserById(id: string): Promise<UserDto> {
+        const foundUser = await this.userRepository.getById(id);
+
+        if (!foundUser){
+            throw new NotFoundException(`User: ${id} not found`);
+        }
+
+        return userModelToDto(foundUser);
+    }
+
+    async getUsersByIds(ids: Array<string>): Promise<Array<UserDto>> {
+        return (await this.userRepository.getAllByIds(ids))
+        .map(x => userModelToDto(x));
     }
 
     async validate(email: string, password: string): Promise<boolean> {
