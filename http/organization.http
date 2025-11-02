@@ -1,7 +1,7 @@
 ### variables
 
-@mainManagerAccessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA1ZTU3ZGNkZTg3ZTY0ODhiMTgyZjQiLCJ1c2VyUm9sZSI6Ik1BTkFHRVIiLCJpYXQiOjE3NjIwODAwNTQsImV4cCI6MTc2MjA4MzY1NH0.2jGxuAdTStHEi0mH04LeufTv8G_l1o9nO-UiU3K1tdQ
-@employeeAccessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA2NWJlMWE1ZjBmMjJjMmY4OTNmM2IiLCJ1c2VyUm9sZSI6IkVNUExPWUVFIiwiaWF0IjoxNzYyMDgwMjc4LCJleHAiOjE3NjIwODM4Nzh9.Z-_EnJBRICXQK_xrOw6p2acZ-03YWozlUmtUOC8I3Zg
+@mainManagerAccessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA1ZTU3ZGNkZTg3ZTY0ODhiMTgyZjQiLCJ1c2VyUm9sZSI6Ik1BTkFHRVIiLCJpYXQiOjE3NjIwODgxNDQsImV4cCI6MTc2MjA5MTc0NH0.TKs0Hh37IhToLQTAJpPxobHHF3glJ0VEXreprRDbHAk
+@employeeAccessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA2NWJlMWE1ZjBmMjJjMmY4OTNmM2IiLCJ1c2VyUm9sZSI6IkVNUExPWUVFIiwiaWF0IjoxNzYyMDg4MTU2LCJleHAiOjE3NjIwOTE3NTZ9.K25N7NF_0Vh009CRVXHY7yWoM-xV5tiCmnzPecDWDrw
 @employeeUserId = 69065be1a5f0f22c2f893f3b
 
 @managerAccessToken = ""
@@ -72,16 +72,26 @@ Authorization: Bearer {{employeeAccessToken}}
 GET http://localhost:3000/places/{{placeSerbiaId}}
 Authorization: Bearer {{mainManagerAccessToken}}
 
+
+### get place: Srbija for employee
+GET http://localhost:3000/places/{{placeSerbiaId}}
+Authorization: Bearer {{employeeAccessToken}}
+
+### get place: Subotica for employee
+GET http://localhost:3000/places/{{placeSuboticaId}}
+Authorization: Bearer {{employeeAccessToken}}
+
 ### add employee to a place: Srbija
 POST http://localhost:3000/places/{{placeSerbiaId}}/users/{{employeeUserId}}
 Content-Type: application/json
 Authorization: Bearer {{mainManagerAccessToken}}
 
-{
-    
-}
+### add employee to a place: Subotica
+POST http://localhost:3000/places/{{placeSuboticaId}}/users/{{employeeUserId}}
+Content-Type: application/json
+Authorization: Bearer {{mainManagerAccessToken}}
 
 ### remove user from a place
 DELETE http://localhost:3000/places/{{placeSerbiaId}}/users/{{employeeUserId}}
 Content-Type: application/json
-Authorization: Bearer {{managerAccessToken}}
+Authorization: Bearer {{mainManagerAccessToken}}

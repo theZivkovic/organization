@@ -16,25 +16,35 @@ import { User, UserSchema } from './infrastructure/models/userModel';
 import { RegistrationToken, RegistrationTokenSchema } from './infrastructure/models/registrationTokenModel';
 import { AssociationsService } from './services/associations.service';
 import { RegistrationTokenService } from './services/registration-token.service';
+import { JwtModule } from '@nestjs/jwt';
+import { AuthController } from './controllers/auth.controller';
+import { PlacesController } from './controllers/places.controller';
+import { AssociationsController } from './controllers/associations.controller';
+import { AuthService } from './services/auth.service';
 
 @Module({
   imports: [
-      MongooseModule.forRoot(process.env.MONGO_URL as string),
-      MongooseModule.forFeature([
-        { name: Place.name, schema: PlaceSchema},
-        { name: Association.name, schema: AssociationSchema },
-        { name: User.name, schema: UserSchema },
-        { name: RegistrationToken.name, schema: RegistrationTokenSchema }
-      ]),
-      ConfigModule.forRoot(),
+    MongooseModule.forRoot(process.env.MONGO_URL as string),
+    MongooseModule.forFeature([
+      { name: Place.name, schema: PlaceSchema },
+      { name: Association.name, schema: AssociationSchema },
+      { name: User.name, schema: UserSchema },
+      { name: RegistrationToken.name, schema: RegistrationTokenSchema }
+    ]),
+    JwtModule.register({
+      global: true,
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: '3600s' },
+    }),
+    ConfigModule.forRoot(),
   ],
-  controllers: [AppController, UsersController],
+  controllers: [AppController, UsersController, AuthController, PlacesController, AssociationsController],
   providers: [
-    AppService, 
+    AppService, AuthService,
     PlaceRepository, PlacesService,
-    AssociationRepository, AssociationsService, 
-    UsersService, UserRepository, 
+    AssociationRepository, AssociationsService,
+    UsersService, UserRepository,
     RegistrationTokenService, RegistrationTokenRepository],
 })
 
-export class AppModule {}
+export class AppModule { }
