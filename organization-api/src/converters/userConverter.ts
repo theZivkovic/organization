@@ -10,3 +10,4 @@ export function userModelToDto(user: User): UserDto{
         role: user.role as unknown as UserRoleDto
     };
 }
+

@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
-import { User } from "../models/userModel";
+import { User, UserRole } from "../models/userModel";
 import { comparePassword } from "src/utils/passwordHelper";
 
 @Injectable()
@@ -18,6 +18,10 @@ export class UserRepository {
 
   async getAllByIds(ids: Array<string>): Promise<Array<User>> {
     return (await this.userModel.find( {_id: { $in: ids}}).exec());
+  }
+
+  async getAllByIdsWithRole(ids: Array<string>, role: UserRole): Promise<Array<User>> {
+    return (await this.userModel.find( {_id: { $in: ids}, role}).exec());
   }
 
   async create(request: Partial<Omit<User, "_id">>): Promise<User> {

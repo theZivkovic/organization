@@ -1,3 +1,4 @@
+import { PlaceDto } from "./placeDto";
 
 export enum UserRoleDto {
     MANAGER = "MANAGER",
@@ -10,4 +11,8 @@ export type UserDto = {
     firstName: string;
     lastName: string;
     role: UserRoleDto
+}
+
+export type UserWithPlaceDto = UserDto & {
+    place: PlaceDto
 }

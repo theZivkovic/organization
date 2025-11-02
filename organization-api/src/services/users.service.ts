@@ -38,6 +38,11 @@ export class UsersService {
         .map(x => userModelToDto(x));
     }
 
+    async getUsersByIdsWithRole(ids: Array<string>, role: UserRoleDto): Promise<Array<UserDto>> {
+        return (await this.userRepository.getAllByIdsWithRole(ids, role as unknown as UserRole))
+        .map(x => userModelToDto(x));
+    }
+
     async validate(email: string, password: string): Promise<boolean> {
         return this.userRepository.validate(email, password);
     }

@@ -1,10 +1,8 @@
 ### variables
 
-@mainManagerAccessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA1ZTU3ZGNkZTg3ZTY0ODhiMTgyZjQiLCJ1c2VyUm9sZSI6Ik1BTkFHRVIiLCJpYXQiOjE3NjIwODgxNDQsImV4cCI6MTc2MjA5MTc0NH0.TKs0Hh37IhToLQTAJpPxobHHF3glJ0VEXreprRDbHAk
-@employeeAccessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA2NWJlMWE1ZjBmMjJjMmY4OTNmM2IiLCJ1c2VyUm9sZSI6IkVNUExPWUVFIiwiaWF0IjoxNzYyMDg4MTU2LCJleHAiOjE3NjIwOTE3NTZ9.K25N7NF_0Vh009CRVXHY7yWoM-xV5tiCmnzPecDWDrw
+@mainManagerAccessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA1ZTU3ZGNkZTg3ZTY0ODhiMTgyZjQiLCJ1c2VyUm9sZSI6Ik1BTkFHRVIiLCJpYXQiOjE3NjIwOTE3ODQsImV4cCI6MTc2MjA5NTM4NH0.16IrsXI3OwaQYVPn4QjCoXgFK-218WQ4XO5M9Cos2dM
+@employeeAccessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA2NWJlMWE1ZjBmMjJjMmY4OTNmM2IiLCJ1c2VyUm9sZSI6IkVNUExPWUVFIiwiaWF0IjoxNzYyMDkxOTAyLCJleHAiOjE3NjIwOTU1MDJ9.guEAO4tAqGna7Mq1wuUjZszVQsTQLRS7jTqiL2G0Lmg
 @employeeUserId = 69065be1a5f0f22c2f893f3b
-
-@managerAccessToken = ""
 
 @registrationToken = 52c9a760-a0aa-434c-9182-5f9b764312f6
 
@@ -64,12 +62,36 @@ Content-Type: application/json
 GET http://localhost:3000/places
 Authorization: Bearer {{mainManagerAccessToken}}
 
+### get places users: MANAGERS for manager
+GET http://localhost:3000/places/users?role=MANAGER
+Authorization: Bearer {{mainManagerAccessToken}}
+
+### get places users: EMPLOYEES for manager
+GET http://localhost:3000/places/users?role=EMPLOYEE
+Authorization: Bearer {{mainManagerAccessToken}}
+
 ### get places for employee
 GET http://localhost:3000/places
 Authorization: Bearer {{employeeAccessToken}}
 
+### get places users: MANAGERS for employee
+GET http://localhost:3000/places/users?role=MANAGER
+Authorization: Bearer {{employeeAccessToken}}
+
+### get places users: EMPLOYEE for employee
+GET http://localhost:3000/places/users?role=EMPLOYEE
+Authorization: Bearer {{employeeAccessToken}}
+
 ### get place: Srbija for main manager
 GET http://localhost:3000/places/{{placeSerbiaId}}
+Authorization: Bearer {{mainManagerAccessToken}}
+
+### get place: Srbija users: MANAGERS for main manager
+GET http://localhost:3000/places/{{placeSerbiaId}}/users?role=MANAGER
+Authorization: Bearer {{mainManagerAccessToken}}
+
+### get place: Srbija users: EMPLOYEES for main manager
+GET http://localhost:3000/places/{{placeSerbiaId}}/users?role=EMPLOYEES
 Authorization: Bearer {{mainManagerAccessToken}}
 
 
