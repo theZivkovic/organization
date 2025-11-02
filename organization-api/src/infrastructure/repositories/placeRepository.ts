@@ -17,4 +17,12 @@ export class PlaceRepository {
         right: {$lt: placeRight} 
     }).exec();
   }
+
+  getPlaceAmongDescendants(placeLeft: number, placeRight: number, placeToGetId: string): Promise<Place | null>{
+    return this.placeModel.findOne({ 
+        left: { $gte: placeLeft}, 
+        right: {$lt: placeRight},
+        _id: placeToGetId
+    }).exec();
+  }
 }
