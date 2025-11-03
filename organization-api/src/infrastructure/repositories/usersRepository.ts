@@ -1,14 +1,14 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
-import { IUserRepository } from "src/core/interfaces/userRepository";
+import { IUsersRepository } from "src/core/interfaces/usersRepository";
 import { MongooseUser } from "../models/userModel";
 import { User } from "src/core/entities/user";
 import { UserRole } from "src/core/enums/userRole";
 import { mapToUser } from "../mappers/mongooseModelMappers";
 
 @Injectable()
-export class UserRepository implements IUserRepository {
+export class UsersRepository implements IUsersRepository {
   constructor(@InjectModel(MongooseUser.name) private userModel: Model<MongooseUser>) {}
 
   async getByEmail(email: string): Promise<User | null> {

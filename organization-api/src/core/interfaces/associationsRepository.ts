@@ -1,7 +1,7 @@
 
 import { Association } from "../entities/association";
 
-export interface IAssociationRepository {
+export interface IAssociationsRepository {
     get(userId: string, placeId: string): Promise<Association | null>;
     getForUser(userId: string): Promise<Association | null>;
     getAllForPlaces(placeIds: Array<string>): Promise<Array<Association>>;
@@ -9,4 +9,4 @@ export interface IAssociationRepository {
     delete(userId: string, placeId: string);
 }
 
-export const IAssociationRepository = Symbol("IAssociationRepository");
+export const IAssociationsRepository = Symbol("IAssociationsRepository");

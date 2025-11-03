@@ -1,7 +1,7 @@
 import { Inject, Injectable, NotFoundException } from "@nestjs/common";
-import { IAssociationRepository } from "../../core/interfaces/associationRepository";
-import { IPlaceRepository } from "../../core/interfaces/placeRepository";
-import { IUserRepository } from "../../core/interfaces/userRepository";
+import { IAssociationsRepository } from "../../core/interfaces/associationsRepository";
+import { IPlacesRepository } from "../../core/interfaces/placesRepository";
+import { IUsersRepository } from "../../core/interfaces/usersRepository";
 import { Place } from "src/core/entities/place";
 import { UserRole } from "src/core/enums/userRole";
 
@@ -9,9 +9,9 @@ import { UserRole } from "src/core/enums/userRole";
 export class PlaceUseCases {
 
     constructor (
-        @Inject(IPlaceRepository) private readonly placeRepository: IPlaceRepository, 
-        @Inject(IAssociationRepository) private readonly associationRepository: IAssociationRepository, 
-        @Inject(IUserRepository) private readonly userRepository: IUserRepository, ) {
+        @Inject(IPlacesRepository) private readonly placeRepository: IPlacesRepository, 
+        @Inject(IAssociationsRepository) private readonly associationRepository: IAssociationsRepository, 
+        @Inject(IUsersRepository) private readonly userRepository: IUsersRepository, ) {
     }
 
     async getPlacesVisibleByUser(userId: string): Promise<Array<Place>>{

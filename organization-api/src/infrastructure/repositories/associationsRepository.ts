@@ -4,10 +4,10 @@ import { Model } from "mongoose";
 import {  MongooseAssociation } from "../models/associationModel";
 import { Association } from "src/core/entities/association";
 import { mapToAssociation } from "../mappers/mongooseModelMappers";
-import { IAssociationRepository } from "src/core/interfaces/associationRepository";
+import { IAssociationsRepository } from "src/core/interfaces/associationsRepository";
 
 @Injectable()
-export class AssociationRepository implements IAssociationRepository {
+export class AssociationsRepository implements IAssociationsRepository {
   constructor(@InjectModel(MongooseAssociation.name) private associationModel: Model<MongooseAssociation>) {}
 
   async get(userId: string, placeId: string): Promise<Association | null> {

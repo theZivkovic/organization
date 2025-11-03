@@ -1,7 +1,7 @@
 import { User } from "src/core/entities/user";
 import { UserRole } from "src/core/enums/userRole";
 
-export interface IUserRepository {
+export interface IUsersRepository {
     getByEmail(email: string): Promise<User | null>;
     getById(id: string): Promise<User | null>;
     getAllByIds(ids: Array<string>): Promise<Array<User>>;
@@ -10,4 +10,4 @@ export interface IUserRepository {
     update(id: string, request: Partial<User>): Promise<User>
 }
 
-export const IUserRepository = Symbol("IPlaceRepository");
+export const IUsersRepository = Symbol("IUserRepository");

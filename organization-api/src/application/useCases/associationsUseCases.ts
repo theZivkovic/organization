@@ -1,12 +1,12 @@
 import { ConflictException, Inject, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
-import { IAssociationRepository } from "src/core/interfaces/associationRepository";
+import { IAssociationsRepository } from "src/core/interfaces/associationsRepository";
 import { PlaceUseCases } from "./placesUseCases";
 
 @Injectable()
 export class AssociationsUseCases {
 
     constructor(
-        @Inject(IAssociationRepository) private readonly associationsRepository: IAssociationRepository,
+        @Inject(IAssociationsRepository) private readonly associationsRepository: IAssociationsRepository,
         private placesUseCases: PlaceUseCases) {
     }
 

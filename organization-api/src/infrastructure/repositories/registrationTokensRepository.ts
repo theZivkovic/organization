@@ -2,11 +2,11 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { MongooseRegistrationToken } from "../models/registrationTokenModel";
-import { IRegistrationTokenRepository } from "src/core/interfaces/registrationgTokenRepository";
+import { IRegistrationTokensRepository } from "src/core/interfaces/registrationTokensRepository";
 import { mapToRegistrationToken } from "../mappers/mongooseModelMappers";
 
 @Injectable()
-export class RegistrationTokenRepository implements IRegistrationTokenRepository {
+export class RegistrationTokensRepository implements IRegistrationTokensRepository {
   constructor(@InjectModel(MongooseRegistrationToken.name) private registrationTokenModel: Model<MongooseRegistrationToken>) {}
 
   async getByToken(token: string){

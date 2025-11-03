@@ -1,6 +1,6 @@
 import { Inject, Injectable, NotFoundException } from "@nestjs/common";
-import { IUserRepository } from "../../core/interfaces/userRepository";
-import { IRegistrationTokenRepository } from "../../core/interfaces/registrationgTokenRepository";
+import { IUsersRepository } from "../../core/interfaces/usersRepository";
+import { IRegistrationTokensRepository } from "../../core/interfaces/registrationTokensRepository";
 import { RegistrationToken } from "src/core/entities/registrationToken";
 import { v4 as uuidv4 } from 'uuid';
 import { UserRole } from "src/core/enums/userRole";
@@ -9,8 +9,8 @@ import { UserRole } from "src/core/enums/userRole";
 export class RegistationTokensUseCases {
 
     constructor(
-        @Inject(IRegistrationTokenRepository) private readonly registrationTokensRepository: IRegistrationTokenRepository,
-        @Inject(IUserRepository) private readonly usersRepository: IUserRepository) {
+        @Inject(IRegistrationTokensRepository) private readonly registrationTokensRepository: IRegistrationTokensRepository,
+        @Inject(IUsersRepository) private readonly usersRepository: IUsersRepository) {
     }
 
     async getRegistrationTokenByToken(token: string): Promise<RegistrationToken> {

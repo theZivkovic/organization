@@ -1,14 +1,14 @@
 import { Inject, Injectable, NotFoundException } from "@nestjs/common";
-import { IUserRepository } from "../../core/interfaces/userRepository";
-import { IRegistrationTokenRepository } from "../../core/interfaces/registrationgTokenRepository";
+import { IUsersRepository } from "../../core/interfaces/usersRepository";
+import { IRegistrationTokensRepository } from "../../core/interfaces/registrationTokensRepository";
 import { generateSaltAndHash } from "src/core/entities/user";
 
 @Injectable()
 export class UsersUseCases {
 
     constructor(
-        @Inject(IRegistrationTokenRepository) private readonly registrationTokensRepository: IRegistrationTokenRepository,
-        @Inject(IUserRepository) private readonly usersRepository: IUserRepository) {
+        @Inject(IRegistrationTokensRepository) private readonly registrationTokensRepository: IRegistrationTokensRepository,
+        @Inject(IUsersRepository) private readonly usersRepository: IUsersRepository) {
     }
 
     async register(token: string, firstName: string, lastName: string, password: string) {

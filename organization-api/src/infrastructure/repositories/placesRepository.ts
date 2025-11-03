@@ -2,12 +2,12 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { MongoosePlace } from "../models/placeModel";
 import { Model } from "mongoose";
-import { IPlaceRepository } from "src/core/interfaces/placeRepository";
+import { IPlacesRepository } from "src/core/interfaces/placesRepository";
 import { Place } from "src/core/entities/place";
 import { mapToPlace } from "../mappers/mongooseModelMappers";
 
 @Injectable()
-export class PlaceRepository implements IPlaceRepository {
+export class PlacesRepository implements IPlacesRepository {
   constructor(@InjectModel(MongoosePlace.name) private placeModel: Model<MongoosePlace>) {}
   
   async getById(id: string): Promise<Place | null> {
