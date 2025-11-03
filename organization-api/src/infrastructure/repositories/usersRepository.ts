@@ -5,7 +5,8 @@ import { IUsersRepository } from "src/core/interfaces/usersRepository";
 import { MongooseUser } from "../models/userModel";
 import { User } from "src/core/entities/user";
 import { UserRole } from "src/core/enums/userRole";
-import { mapToUser } from "../mappers/mongooseModelMappers";
+import { mapToUser, mapToUserWithCredentials } from "../mappers/mongooseModelMappers";
+import { UserWithCredentials } from "src/core/entities/userWithCredentials";
 
 @Injectable()
 export class UsersRepository implements IUsersRepository {
@@ -14,6 +15,11 @@ export class UsersRepository implements IUsersRepository {
   async getByEmail(email: string): Promise<User | null> {
     const dbUser = await this.userModel.findOne({ email }).exec();
     return dbUser ? mapToUser(dbUser.toObject() as MongooseUser) : null;
+  };
+
+  async getByEmailWithCredentials(email: string): Promise<UserWithCredentials | null> {
+    const dbUser = await this.userModel.findOne({ email }).exec();
+    return dbUser ? mapToUserWithCredentials(dbUser.toObject() as MongooseUser) : null;
   };
 
   async getById(id: string): Promise<User | null> {
@@ -40,7 +46,7 @@ export class UsersRepository implements IUsersRepository {
     return mapToUser(createdUser?.toObject() as MongooseUser);
   }
 
-  async update(id: string, request: Partial<Omit<User, "_id">>): Promise<User>{
+  async update(id: string, request: Partial<Omit<UserWithCredentials, "_id">>): Promise<User>{
     await this.userModel.updateOne({ _id: id}, request).exec();
     const updatedUser = await this.userModel.findOne({ _id: id }).exec();
     if (!updatedUser) {

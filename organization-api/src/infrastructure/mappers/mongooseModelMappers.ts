@@ -8,6 +8,7 @@ import { PlaceType } from "src/core/enums/placeType";
 import { Place } from "src/core/entities/place";
 import { MongooseRegistrationToken } from "../models/registrationTokenModel";
 import { RegistrationToken } from "src/core/entities/registrationToken";
+import { UserWithCredentials } from "src/core/entities/userWithCredentials";
 
 export function mapToUser(user: MongooseUser): User {
     return {
@@ -15,9 +16,15 @@ export function mapToUser(user: MongooseUser): User {
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
-        passwordHash: user.passwordHash,
-        passwordSalt: user.passwordSalt,
         role: user.role as unknown as UserRole
+    };
+}
+
+export function mapToUserWithCredentials(user: MongooseUser): UserWithCredentials {
+    return {
+        ...mapToUser(user),
+        passwordHash: user.passwordHash,
+        passwordSalt: user.passwordSalt
     };
 }
 

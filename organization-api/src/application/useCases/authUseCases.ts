@@ -1,6 +1,7 @@
 import { Inject, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { IUsersRepository } from "../../core/interfaces/usersRepository";
-import { comparePassword, User } from "src/core/entities/user";
+import { User } from "src/core/entities/user";
+import { comparePassword } from "src/core/entities/userWithCredentials";
 
 @Injectable()
 export class AuthUseCases {
@@ -10,7 +11,7 @@ export class AuthUseCases {
     }
 
     async getUserByCredentials(email: string, password: string): Promise<User> {
-        const user = await this.userRepository.getByEmail(email);
+        const user = await this.userRepository.getByEmailWithCredentials(email);
 
         if (!user){
             throw new NotFoundException(`User with email: ${email} not found`);
@@ -20,7 +21,8 @@ export class AuthUseCases {
             throw new UnauthorizedException('Invalid credentials');
         }
 
-        return user;
+        const { passwordHash, passwordSalt, ...strippedUser } = user;
+        return strippedUser;
     }
 }
 
