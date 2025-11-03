@@ -1,9 +1,9 @@
-import { ConflictException, Inject, Injectable, NotFoundException, UnprocessableEntityException } from "@nestjs/common";
+import { ConflictException, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { IUsersRepository } from "../../core/interfaces/usersRepository";
 import { IRegistrationTokensRepository } from "../../core/interfaces/registrationTokensRepository";
-import { RegistrationToken } from "src/core/entities/registrationToken";
+import { RegistrationToken } from "../../core/entities/registrationToken";
 import { v4 as uuidv4 } from 'uuid';
-import { UserRole } from "src/core/enums/userRole";
+import { UserRole } from "../../core/enums/userRole";
 
 @Injectable()
 export class RegistationTokensUseCases {

@@ -1,7 +1,7 @@
 import { Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { IUsersRepository } from "../../core/interfaces/usersRepository";
 import { IRegistrationTokensRepository } from "../../core/interfaces/registrationTokensRepository";
-import { generateSaltAndHash } from "src/core/entities/userWithCredentials";
+import { generateSaltAndHash } from "../../core/entities/userWithCredentials";
 
 @Injectable()
 export class UsersUseCases {
