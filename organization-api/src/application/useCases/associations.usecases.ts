@@ -1,16 +1,22 @@
 import { ConflictException, Inject, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { IAssociationsRepository } from "../../core/interfaces/associationsRepository";
 import { IPlacesRepository } from "../../core/interfaces/placesRepository";
+import { IUsersRepository } from "../../core/interfaces/usersRepository";
 
 @Injectable()
 export class AssociationsUseCases {
 
     constructor(
         @Inject(IAssociationsRepository) private readonly associationsRepository: IAssociationsRepository,
-        @Inject(IPlacesRepository) private readonly placesRepository: IPlacesRepository) {
+        @Inject(IPlacesRepository) private readonly placesRepository: IPlacesRepository,
+        @Inject(IUsersRepository) private readonly usersRepository: IUsersRepository) {
     }
 
     async addUserToAPlace(managerUserId: string, userToAddId: string, placeToAddToId: string) {
+
+        if (!await this.usersRepository.getById(userToAddId)){
+            throw new NotFoundException(`User to add: ${userToAddId} not found`);
+        }
 
         const userToAddAssociation = await this.associationsRepository.getForUser(userToAddId);
 
@@ -22,10 +28,14 @@ export class AssociationsUseCases {
             return userToAddAssociation;
         }
 
+        if (!await this.usersRepository.getById(managerUserId)){
+            throw new NotFoundException(`Managing user: ${managerUserId} not found`);
+        }
+
         const managingUserAssociation = await this.associationsRepository.getForUser(managerUserId);
 
         if (!managingUserAssociation) {
-            throw new NotFoundException('Managing user is not assigned to any place');
+            throw new NotFoundException(`Managing user: ${managerUserId} is not assigned to any place`);
         }
 
         const managingUserPlace = await this.placesRepository.getById(managingUserAssociation.placeId);
@@ -46,16 +56,24 @@ export class AssociationsUseCases {
 
     async removeUserFromAPlace(managerUserId: string, userToRemoveId: string, placeToRemoveFromId: string) {
 
+        if (!await this.usersRepository.getById(userToRemoveId)){
+            throw new NotFoundException(`User to remove: ${userToRemoveId} not found`);
+        }
+
         const userToRemoveAssociation = await this.associationsRepository.getForUser(userToRemoveId);
 
         if (!userToRemoveAssociation || userToRemoveAssociation.placeId !== placeToRemoveFromId) {
             throw new NotFoundException('User is not assigned to this place');
         }
 
+        if (!await this.usersRepository.getById(managerUserId)){
+            throw new NotFoundException(`Managing user: ${managerUserId} not found`);
+        }
+
         const managingUserAssociation = await this.associationsRepository.getForUser(managerUserId);
 
         if (!managingUserAssociation) {
-            throw new NotFoundException('Managing user is not assigned to any place');
+            throw new NotFoundException(`Managing user: ${managerUserId} is not assigned to any place`);
         }
 
         const managingUserPlace = await this.placesRepository.getById(managingUserAssociation.placeId);
