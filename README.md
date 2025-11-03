@@ -11,6 +11,7 @@ This is a project for managing an organization. It contains a docker-compose tha
 ## Run / Test
 
 * To run the system, just simply: `docker compose up -d --build`
+* To run the system in dev mode, npm install/build both projects and then: `docker compose up -d --build -f docker-compose.dev.yml`
 * To run the tests: `cd organization-api && npm run test`
 
 After the containers are up, you can play around with API in `organization.http` file. You'll need a `Rest Client` extension for VSCode (extensionId: `humao.rest-clien`)

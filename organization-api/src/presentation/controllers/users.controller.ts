@@ -15,7 +15,7 @@ export class UsersController {
   @UseGuards(RoleGuard([UserRole.EMPLOYEE, UserRole.MANAGER]))
   @Get('me')
   async getMe(@Request() req){
-    return req.user;
+    return this.usersUseCases.getUserById(req.user.userId);
   }
 
   @Post('register')

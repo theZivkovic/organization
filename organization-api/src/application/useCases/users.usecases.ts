@@ -11,6 +11,16 @@ export class UsersUseCases {
         @Inject(IUsersRepository) private readonly usersRepository: IUsersRepository) {
     }
 
+    async getUserById(userId: string){
+        const user = await this.usersRepository.getById(userId);
+
+        if (!user){
+            throw new NotFoundException(`User: ${userId} not found`);
+        }
+
+        return user;
+    }
+
     async register(token: string, firstName: string, lastName: string, password: string) {
         const registrationToken = await this.registrationTokensRepository.getByToken(token);
 

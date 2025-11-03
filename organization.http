@@ -1,13 +1,13 @@
 ### variables
 
-@mainManagerAccessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA4YzU3M2RhNmYzYjA5MDI1ZDI1NGQiLCJ1c2VyUm9sZSI6Ik1BTkFHRVIiLCJpYXQiOjE3NjIxODI4NTgsImV4cCI6MTc2MjE4NjQ1OH0.T04uF2lyOmw71M6w4tS5jDjM-hynXIZX6zdFyd9Xwds
-@employeeAccessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA4YzZkZjkyYmNjYzMyNjJkNWQ4OWQiLCJ1c2VyUm9sZSI6IkVNUExPWUVFIiwiaWF0IjoxNzYyMTgyOTAyLCJleHAiOjE3NjIxODY1MDJ9.gKWaew-EQeytisN9ywZVSE5csw1q7Uk9r2SBwbueNtQ
-@employeeUserId = 6908c6df92bccc3262d5d89d
+@mainManagerAccessToken =
+@employeeAccessToken = 
+@employeeUserId = 
 
-@registrationToken = e8fa056b-4ff1-4d02-befa-0286edc3e8ee
+@registrationToken = 
 
-@placeSerbiaId = 6908c573da6f3b09025d251f
-@placeSuboticaId = 6908c573da6f3b09025d2522
+@placeSerbiaId = 
+@placeSuboticaId = 
 
 ### login main manager
 POST http://localhost:3000/auth/login
