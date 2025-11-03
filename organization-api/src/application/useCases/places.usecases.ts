@@ -2,8 +2,8 @@ import { Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { IAssociationsRepository } from "../../core/interfaces/associationsRepository";
 import { IPlacesRepository } from "../../core/interfaces/placesRepository";
 import { IUsersRepository } from "../../core/interfaces/usersRepository";
-import { Place } from "src/core/entities/place";
-import { UserRole } from "src/core/enums/userRole";
+import { Place } from "../../core/entities/place";
+import { UserRole } from "../../core/enums/userRole";
 
 @Injectable()
 export class PlaceUseCases {

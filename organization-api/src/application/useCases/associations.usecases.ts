@@ -1,14 +1,13 @@
 import { ConflictException, Inject, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
-import { IAssociationsRepository } from "src/core/interfaces/associationsRepository";
-import { PlaceUseCases } from "./places.usecases";
-import { IPlacesRepository } from "src/core/interfaces/placesRepository";
+import { IAssociationsRepository } from "../../core/interfaces/associationsRepository";
+import { IPlacesRepository } from "../../core/interfaces/placesRepository";
 
 @Injectable()
 export class AssociationsUseCases {
 
     constructor(
         @Inject(IAssociationsRepository) private readonly associationsRepository: IAssociationsRepository,
-    @Inject(IPlacesRepository) private readonly placesRepository: IPlacesRepository) {
+        @Inject(IPlacesRepository) private readonly placesRepository: IPlacesRepository) {
     }
 
     async addUserToAPlace(managerUserId: string, userToAddId: string, placeToAddToId: string) {
@@ -30,8 +29,8 @@ export class AssociationsUseCases {
         }
 
         const managingUserPlace = await this.placesRepository.getById(managingUserAssociation.placeId);
-        
-        if (!managingUserPlace){
+
+        if (!managingUserPlace) {
             throw new NotFoundException(`Place: ${managingUserAssociation.placeId} not found`)
         }
 
@@ -46,7 +45,7 @@ export class AssociationsUseCases {
     }
 
     async removeUserFromAPlace(managerUserId: string, userToRemoveId: string, placeToRemoveFromId: string) {
-        
+
         const userToRemoveAssociation = await this.associationsRepository.getForUser(userToRemoveId);
 
         if (!userToRemoveAssociation || userToRemoveAssociation.placeId !== placeToRemoveFromId) {
@@ -60,8 +59,8 @@ export class AssociationsUseCases {
         }
 
         const managingUserPlace = await this.placesRepository.getById(managingUserAssociation.placeId);
-        
-        if (!managingUserPlace){
+
+        if (!managingUserPlace) {
             throw new NotFoundException(`Place: ${managingUserAssociation.placeId} not found`)
         }
 
