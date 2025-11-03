@@ -3,14 +3,14 @@ import { UserRoleDto } from '../../dtos/userDto';
 import type { RegisterRequestDto } from '../../dtos/registerRequestDto';
 import { RoleGuard } from 'src/presentation/guards/auth.guard';
 import type { CreateRegistrationTokenRequestDto } from 'src/dtos/createRegistrationTokenRequestDto';
-import { RegistationTokensCases } from 'src/application/useCases/registrationTokens';
-import { UsersCases } from 'src/application/useCases/users';
+import { RegistationTokensUseCases } from 'src/application/useCases/registrationTokensUseCases';
+import { UsersUseCases } from 'src/application/useCases/users';
 
 @Controller('users')
 export class UsersController {
   constructor(
-    private registrationTokensCases: RegistationTokensCases,
-    private usersCases: UsersCases) {}
+    private registrationTokensUseCases: RegistationTokensUseCases,
+    private usersUseCases: UsersUseCases) {}
 
   @UseGuards(RoleGuard([UserRoleDto.EMPLOYEE, UserRoleDto.MANAGER]))
   @Get('me')
@@ -19,8 +19,8 @@ export class UsersController {
   }
 
   @Post('register')
-  async register(@Request() req, @Body() request: RegisterRequestDto) {
-    return this.usersCases.register(
+  async register(@Body() request: RegisterRequestDto) {
+    return this.usersUseCases.register(
       request.token,
       request.firstName,
       request.lastName,
@@ -31,7 +31,7 @@ export class UsersController {
   @UseGuards(RoleGuard([UserRoleDto.MANAGER]))
   @Post('registration-tokens')
   async createRegistrationTokens(@Request() req, @Body() request: CreateRegistrationTokenRequestDto){
-    return this.registrationTokensCases.recreateRegistrationToken(
+    return this.registrationTokensUseCases.recreateRegistrationToken(
       req.user.userId,
       request.toUserEmail,
       request.toUserRole

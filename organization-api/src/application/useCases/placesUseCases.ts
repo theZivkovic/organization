@@ -6,7 +6,7 @@ import { Place } from "src/core/entities/place";
 import { UserRole } from "src/core/enums/userRole";
 
 @Injectable()
-export class PlaceCases {
+export class PlaceUseCases {
 
     constructor (
         @Inject(IPlaceRepository) private readonly placeRepository: IPlaceRepository, 

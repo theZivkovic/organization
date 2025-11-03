@@ -3,7 +3,7 @@ import { IUserRepository } from "../../core/interfaces/userRepository";
 import { comparePassword, User } from "src/core/entities/user";
 
 @Injectable()
-export class AuthCases {
+export class AuthUseCases {
 
     constructor (
         @Inject(IUserRepository) private readonly userRepository: IUserRepository, ) {

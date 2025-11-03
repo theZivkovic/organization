@@ -1,21 +1,18 @@
 import { ConflictException, Inject, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
-import { IUserRepository } from "../../core/interfaces/userRepository";
-import { IRegistrationTokenRepository } from "../../core/interfaces/registrationgTokenRepository";
 import { IAssociationRepository } from "src/core/interfaces/associationRepository";
-import { Place } from "src/core/entities/place";
-import { PlaceCases } from "./places";
+import { PlaceUseCases } from "./placesUseCases";
 
 @Injectable()
-export class AssociationsCases {
+export class AssociationsUseCases {
 
     constructor(
         @Inject(IAssociationRepository) private readonly associationsRepository: IAssociationRepository,
-        private placesCases: PlaceCases) {
+        private placesUseCases: PlaceUseCases) {
     }
 
     async addUserToAPlace(managerUserId: string, userToAddId: string, placeToAddToId: string) {
 
-        const placesVisibleToManagingUser = await this.placesCases.getPlacesVisibleByUser(managerUserId);
+        const placesVisibleToManagingUser = await this.placesUseCases.getPlacesVisibleByUser(managerUserId);
 
         const userToAddAssociation = await this.associationsRepository.getForUser(userToAddId);
 
@@ -42,7 +39,7 @@ export class AssociationsCases {
 
     async removeUserFromAPlace(managerUserId: string, userToRemoveId: string, placeToRemoveFromId: string) {
         
-        const placesVisibleToManagingUser = await this.placesCases.getPlacesVisibleByUser(managerUserId);
+        const placesVisibleToManagingUser = await this.placesUseCases.getPlacesVisibleByUser(managerUserId);
 
         const userToRemoveAssociation = await this.associationsRepository.getForUser(userToRemoveId);
 

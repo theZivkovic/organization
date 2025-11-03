@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { UserRole } from "src/core/enums/userRole";
 
 @Injectable()
-export class RegistationTokensCases {
+export class RegistationTokensUseCases {
 
     constructor(
         @Inject(IRegistrationTokenRepository) private readonly registrationTokensRepository: IRegistrationTokenRepository,

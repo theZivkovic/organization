@@ -1,12 +1,12 @@
 import { Controller, Get, UseGuards, Request, Param, Query } from '@nestjs/common';
-import { PlaceCases } from 'src/application/useCases/places';
+import { PlaceUseCases } from 'src/application/useCases/placesUseCases';
 import { UserRole } from 'src/core/enums/userRole';
 import { UserRoleDto } from 'src/dtos/userDto';
 import { RoleGuard } from 'src/presentation/guards/auth.guard';
 
 @Controller('places')
 export class PlacesController {
-  constructor(private placeCases: PlaceCases ) { }
+  constructor(private placeCases: PlaceUseCases ) { }
 
   @UseGuards(RoleGuard([UserRoleDto.EMPLOYEE, UserRoleDto.MANAGER]))
   @Get('/')

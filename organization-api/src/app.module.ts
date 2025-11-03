@@ -13,19 +13,19 @@ import { AuthController } from './presentation/controllers/auth.controller';
 import { PlacesController } from './presentation/controllers/places.controller';
 import { AssociationsController } from './presentation/controllers/associations.controller';
 import { AuthService } from './presentation/services/auth.service';
-import { PlaceCases } from './application/useCases/places';
+import { PlaceUseCases } from './application/useCases/placesUseCases';
 import { IPlaceRepository } from './core/interfaces/placeRepository';
 import { MongoosePlace, MongoosePlaceSchema } from './infrastructure/models/placeModel';
 import { IAssociationRepository } from './core/interfaces/associationRepository';
 import { IUserRepository } from './core/interfaces/userRepository';
 import { MongooseAssociation, MongooseAssociationSchema } from './infrastructure/models/associationModel';
 import { MongooseUser, MongooseUserSchema } from './infrastructure/models/userModel';
-import { AuthCases } from './application/useCases/auth';
+import { AuthUseCases } from './application/useCases/authUseCases';
 import { IRegistrationTokenRepository } from './core/interfaces/registrationgTokenRepository';
 import { MongooseRegistrationToken, MongooseRegistrationTokenSchema } from './infrastructure/models/registrationTokenModel';
-import { RegistationTokensCases } from './application/useCases/registrationTokens';
-import { UsersCases } from './application/useCases/users';
-import { AssociationsCases } from './application/useCases/associations';
+import { RegistationTokensUseCases } from './application/useCases/registrationTokensUseCases';
+import { UsersUseCases } from './application/useCases/users';
+import { AssociationsUseCases } from './application/useCases/associationsUseCases';
 
 @Module({
   imports: [
@@ -47,7 +47,7 @@ import { AssociationsCases } from './application/useCases/associations';
   providers: [
     AppService, AuthService,
     AssociationRepository,
-    PlaceCases, AuthCases, RegistationTokensCases, UsersCases, AssociationsCases,
+    PlaceUseCases, AuthUseCases, RegistationTokensUseCases, UsersUseCases, AssociationsUseCases,
     {
       provide: IPlaceRepository,
       useClass: PlaceRepository
