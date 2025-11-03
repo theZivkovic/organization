@@ -11,7 +11,7 @@ export class RegistrationTokensRepository implements IRegistrationTokensReposito
 
   async getByToken(token: string){
     const dbToken = await this.registrationTokenModel.findOne({ token}).exec();
-    return token ? mapToRegistrationToken(dbToken?.toObject() as MongooseRegistrationToken) : null;
+    return dbToken ? mapToRegistrationToken(dbToken?.toObject() as MongooseRegistrationToken) : null;
   }
 
   async create(request: Omit<MongooseRegistrationToken, 'id' | '_id'>) {

@@ -3,7 +3,7 @@ import type { RegisterRequestDto } from '../dtos/registerRequestDto';
 import { RoleGuard } from 'src/presentation/guards/auth.guard';
 import type { CreateRegistrationTokenRequestDto } from 'src/presentation/dtos/createRegistrationTokenRequestDto';
 import { RegistationTokensUseCases } from 'src/application/useCases/registrationTokensUseCases';
-import { UsersUseCases } from 'src/application/useCases/users';
+import { UsersUseCases } from 'src/application/useCases/usersUseCases';
 import { UserRole } from 'src/core/enums/userRole';
 
 @Controller('users')

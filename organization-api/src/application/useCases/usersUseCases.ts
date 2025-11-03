@@ -28,6 +28,7 @@ export class UsersUseCases {
                 passwordSalt: salt
             }
         );
+        await this.registrationTokensRepository.delete(registrationToken.id);
 
         return updatedUser;
     }

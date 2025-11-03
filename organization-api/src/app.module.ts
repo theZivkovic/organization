@@ -24,7 +24,7 @@ import { AuthUseCases } from './application/useCases/authUseCases';
 import { IRegistrationTokensRepository } from './core/interfaces/registrationTokensRepository';
 import { MongooseRegistrationToken, MongooseRegistrationTokenSchema } from './infrastructure/models/registrationTokenModel';
 import { RegistationTokensUseCases } from './application/useCases/registrationTokensUseCases';
-import { UsersUseCases } from './application/useCases/users';
+import { UsersUseCases } from './application/useCases/usersUseCases';
 import { AssociationsUseCases } from './application/useCases/associationsUseCases';
 
 @Module({

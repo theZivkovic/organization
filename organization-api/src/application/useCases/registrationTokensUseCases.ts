@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { ConflictException, Inject, Injectable, NotFoundException, UnprocessableEntityException } from "@nestjs/common";
 import { IUsersRepository } from "../../core/interfaces/usersRepository";
 import { IRegistrationTokensRepository } from "../../core/interfaces/registrationTokensRepository";
 import { RegistrationToken } from "src/core/entities/registrationToken";
@@ -24,8 +24,14 @@ export class RegistationTokensUseCases {
     }
 
     async recreateRegistrationToken(issuingUserId: string, toUserEmail: string, toUserRole: UserRole): Promise<RegistrationToken> {
-        const toUser = await this.usersRepository.getByEmail(toUserEmail)
-            ?? await this.usersRepository.create({
+        const existingToUser = await this.usersRepository.getByEmailWithCredentials(toUserEmail);
+
+        if (existingToUser?.passwordHash){
+            throw new ConflictException(`User: ${toUserEmail} already registered`);
+        }
+        
+        const toUser = existingToUser ??
+        await this.usersRepository.create({
                 email: toUserEmail,
                 role: toUserRole
             });
