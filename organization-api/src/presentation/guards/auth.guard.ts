@@ -1,9 +1,9 @@
 import { CanActivate, ExecutionContext, Injectable, mixin, Type, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { UserRoleDto } from 'src/dtos/userDto';
+import { UserRole } from 'src/core/enums/userRole';
 
-export const RoleGuard = (allowedRoles: Array<UserRoleDto>): Type<CanActivate> => {
+export const RoleGuard = (allowedRoles: Array<UserRole>): Type<CanActivate> => {
     @Injectable()
     class AuthGuardMixin implements CanActivate {
         constructor(private jwtService: JwtService, private configService: ConfigService) { }
