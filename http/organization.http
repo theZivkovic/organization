@@ -1,10 +1,10 @@
 ### variables
 
-@mainManagerAccessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA4OThmNTA3ZjY3ZWE0YmM5NzMwNDkiLCJ1c2VyUm9sZSI6Ik1BTkFHRVIiLCJpYXQiOjE3NjIxNzExMzIsImV4cCI6MTc2MjE3NDczMn0.LD4wY4W1-4QacXbUUKTAwRy2dvc9oajxC3mzDQ8CoKo
-@employeeAccessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA4OTkwNmYzN2EyMWQwZTFjY2JhMTkiLCJ1c2VyUm9sZSI6IkVNUExPWUVFIiwiaWF0IjoxNzYyMTcxMzE5LCJleHAiOjE3NjIxNzQ5MTl9.t26zX4xJbXQDR0DMLpdESOXaFptSNhiZC5phcjVLrgk
-@employeeUserId = 69087e95131da868aac16e10
+@mainManagerAccessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA4OThmNTA3ZjY3ZWE0YmM5NzMwNDkiLCJ1c2VyUm9sZSI6Ik1BTkFHRVIiLCJpYXQiOjE3NjIxNzE1NjMsImV4cCI6MTc2MjE3NTE2M30.XbAeAxnqCJw6Ld7HOYBnq0Y313wKIxZbypXXIXF4fDU
+@employeeAccessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA4OWFjOTc1MGJhNDk0NDc4YzdkZTUiLCJ1c2VyUm9sZSI6IkVNUExPWUVFIiwiaWF0IjoxNzYyMTcxNjE1LCJleHAiOjE3NjIxNzUyMTV9.zReS8ykU4PWNuMmCtjvGG0HCNkLjlqWx0OpRU544Lhc
+@employeeUserId = 69089ac9750ba494478c7de5
 
-@registrationToken = 30721bd9-e599-4ba7-b44b-97b22f5bea5e
+@registrationToken = da8df646-9327-44f3-9fd3-e64109e93f5e
 
 @placeSerbiaId = 6905e57dcde87e6488b182c6
 @placeSuboticaId = 6905e57dcde87e6488b182c9
@@ -113,7 +113,7 @@ POST http://localhost:3000/places/{{placeSuboticaId}}/users/{{employeeUserId}}
 Content-Type: application/json
 Authorization: Bearer {{mainManagerAccessToken}}
 
-### delete employee to a place: Subotica
+### delete employee to a place: Srbija
 DELETE  http://localhost:3000/places/{{placeSerbiaId}}/users/{{employeeUserId}}
 Content-Type: application/json
 Authorization: Bearer {{mainManagerAccessToken}}
