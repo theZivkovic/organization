@@ -2,7 +2,7 @@ import { Controller, Get, UseGuards, Request, Param, Query } from '@nestjs/commo
 import { PlaceCases } from 'src/application/useCases/places';
 import { UserRole } from 'src/core/enums/userRole';
 import { UserRoleDto } from 'src/dtos/userDto';
-import { RoleGuard } from 'src/guards/auth.guard';
+import { RoleGuard } from 'src/presentation/guards/auth.guard';
 
 @Controller('places')
 export class PlacesController {

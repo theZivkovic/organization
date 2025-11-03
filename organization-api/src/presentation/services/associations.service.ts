@@ -1,5 +1,5 @@
 import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
-import { AssociationRepository } from '../infrastructure/repositories/associationRepository';
+import { AssociationRepository } from '../../infrastructure/repositories/associationRepository';
 import { AssociationDto } from 'src/dtos/associationDto';
 import { associationModelToDto } from 'src/converters/associationsConverter';
 import { PlaceDto } from 'src/dtos/placeDto';

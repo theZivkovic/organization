@@ -6,6 +6,8 @@ import { Association } from "src/core/entities/association";
 import { MongoosePlace } from "../models/placeModel";
 import { PlaceType } from "src/core/enums/placeType";
 import { Place } from "src/core/entities/place";
+import { MongooseRegistrationToken } from "../models/registrationTokenModel";
+import { RegistrationToken } from "src/core/entities/registrationToken";
 
 export function mapToUser(user: MongooseUser): User {
     return {
@@ -56,5 +58,14 @@ export function mapToPlaceFull(place: MongoosePlace, users: Array<MongooseUser>)
     return {
         ...mapToPlace(place),
         users: users.map(x => mapToUser(x))
+    }
+}
+
+export function mapToRegistrationToken(registrationToken: MongooseRegistrationToken): RegistrationToken {
+    return {
+        toUserId: registrationToken.toUserId,
+        issuingUserId: registrationToken.issuingUserId,
+        id: registrationToken._id.toString(),
+        token: registrationToken.token
     }
 }

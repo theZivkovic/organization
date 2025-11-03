@@ -1,4 +1,6 @@
+import { UserRole } from "src/core/enums/userRole"
+
 export type CreateRegistrationTokenRequestDto = {
-    issuingUserId: string,
-    toUserId: string
+    toUserEmail: string,
+    toUserRole: UserRole
 }

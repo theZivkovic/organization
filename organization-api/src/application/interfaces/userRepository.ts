@@ -8,7 +8,6 @@ export interface IUserRepository {
     getAllByIdsWithRole(ids: Array<string>, role: UserRole)
     create(request: Partial<User>): Promise<User>;
     update(id: string, request: Partial<User>): Promise<User>
-    validateCredentials(email: string, rawPassword: string): Promise<boolean>;
 }
 
 export const IUserRepository = Symbol("IPlaceRepository");

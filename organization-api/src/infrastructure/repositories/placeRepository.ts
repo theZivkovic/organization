@@ -12,7 +12,7 @@ export class PlaceRepository implements IPlaceRepository {
   
   async getById(id: string): Promise<Place | null> {
     const dbPlace = await this.placeModel.findById(id).exec();
-    return mapToPlace(dbPlace?.toObject() as MongoosePlace);
+    return dbPlace ? mapToPlace(dbPlace.toObject() as MongoosePlace) : null;
   };
 
   async getAllDescendants(placeLeft: number, placeRight: number): Promise<Place[]> {
@@ -29,6 +29,6 @@ export class PlaceRepository implements IPlaceRepository {
         right: {$lt: placeRight},
         _id: placeToGetId
     }).exec();
-    return mapToPlace(dbPlace?.toObject() as MongoosePlace);
+    return dbPlace ? mapToPlace(dbPlace.toObject() as MongoosePlace) : null;
   }
 }

@@ -4,7 +4,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Schema as MongooseSchema } from 'mongoose';
 
 @Schema({ collection: 'registrationtokens' })
-export class RegistrationToken {
+export class MongooseRegistrationToken {
 
   @Prop({ type: MongooseSchema.Types.ObjectId, auto: true })
     _id: MongooseSchema.Types.ObjectId;
@@ -19,4 +19,4 @@ export class RegistrationToken {
   token: string
 }
 
-export const RegistrationTokenSchema = SchemaFactory.createForClass(RegistrationToken);
+export const MongooseRegistrationTokenSchema = SchemaFactory.createForClass(MongooseRegistrationToken);

@@ -33,6 +33,7 @@ export const RoleGuard = (allowedRoles: Array<UserRoleDto>): Type<CanActivate> =
             }
             return true;
         }
+        
         private extractTokenFromHeader(request: Request): string | undefined {
             const [type, token] = request.headers['authorization']?.split(' ') ?? [];
             return type === 'Bearer' ? token : undefined;

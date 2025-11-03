@@ -1,15 +1,13 @@
 import { Controller, UseGuards, Request, Param, Delete, Post } from '@nestjs/common';
-import { RoleGuard } from '../../guards/auth.guard';
+import { RoleGuard } from '../guards/auth.guard';
 import { UserRoleDto } from 'src/dtos/userDto';
-import { AssociationsService } from 'src/services/associations.service';
-import { UsersService } from 'src/services/users.service';
+import { AssociationsService } from 'src/presentation/services/associations.service';
 import { associationModelToFullDto } from 'src/converters/associationsConverter';
 
 @Controller('places')
 export class AssociationsController {
     constructor(
       private associationsService: AssociationsService,
-      private usersService: UsersService
     ) {}
     
       @UseGuards(RoleGuard([UserRoleDto.MANAGER]))

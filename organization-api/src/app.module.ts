@@ -4,20 +4,16 @@ import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { PlaceRepository } from './infrastructure/repositories/placeRepository';
-// import { PlaceSchema, Place } from './infrastructure/models/placeModel';
 import { UsersController } from './presentation/controllers/users.controller';
 import { AssociationRepository } from './infrastructure/repositories/associationRepository';
-import { UsersService } from './services/users.service';
 import { UserRepository } from './infrastructure/repositories/userRepository';
-import { RegistrationTokenRepository } from './infrastructure/repositories/registrationCodeRepository';
-import { RegistrationToken, RegistrationTokenSchema } from './infrastructure/models/registrationTokenModel';
-import { AssociationsService } from './services/associations.service';
-import { RegistrationTokenService } from './services/registration-token.service';
+import { RegistrationTokenRepository } from './infrastructure/repositories/registrationTokenRepository';
+import { AssociationsService } from './presentation/services/associations.service';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthController } from './presentation/controllers/auth.controller';
 import { PlacesController } from './presentation/controllers/places.controller';
 import { AssociationsController } from './presentation/controllers/associations.controller';
-import { AuthService } from './services/auth.service';
+import { AuthService } from './presentation/services/auth.service';
 import { PlaceCases } from './application/useCases/places';
 import { IPlaceRepository } from './application/interfaces/placeRepository';
 import { MongoosePlace, MongoosePlaceSchema } from './infrastructure/models/placeModel';
@@ -25,6 +21,11 @@ import { IAssociationRepository } from './application/interfaces/associationRepo
 import { IUserRepository } from './application/interfaces/userRepository';
 import { MongooseAssociation, MongooseAssociationSchema } from './infrastructure/models/associationModel';
 import { MongooseUser, MongooseUserSchema } from './infrastructure/models/userModel';
+import { AuthCases } from './application/useCases/auth';
+import { IRegistrationTokenRepository } from './application/interfaces/registrationgTokenRepository';
+import { MongooseRegistrationToken, MongooseRegistrationTokenSchema } from './infrastructure/models/registrationTokenModel';
+import { RegistationTokensCases } from './application/useCases/registrationTokens';
+import { UsersCases } from './application/useCases/users';
 
 @Module({
   imports: [
@@ -33,7 +34,7 @@ import { MongooseUser, MongooseUserSchema } from './infrastructure/models/userMo
       { name: MongoosePlace.name, schema: MongoosePlaceSchema },
       { name: MongooseAssociation.name, schema: MongooseAssociationSchema },
       { name: MongooseUser.name, schema: MongooseUserSchema },
-      { name: RegistrationToken.name, schema: RegistrationTokenSchema }
+      { name: MongooseRegistrationToken.name, schema: MongooseRegistrationTokenSchema }
     ]),
     JwtModule.register({
       global: true,
@@ -46,11 +47,9 @@ import { MongooseUser, MongooseUserSchema } from './infrastructure/models/userMo
   providers: [
     AppService, AuthService,
     AssociationRepository, AssociationsService,
-    UsersService,
-    RegistrationTokenService, RegistrationTokenRepository,
-    PlaceCases,
+    PlaceCases, AuthCases, RegistationTokensCases, UsersCases,
     {
-      provide: IPlaceRepository, // Used as a symbol
+      provide: IPlaceRepository,
       useClass: PlaceRepository
     },
     {
@@ -60,6 +59,10 @@ import { MongooseUser, MongooseUserSchema } from './infrastructure/models/userMo
     {
       provide: IUserRepository,
       useClass: UserRepository
+    },
+    {
+      provide: IRegistrationTokenRepository,
+      useClass: RegistrationTokenRepository
     }],
 })
 
