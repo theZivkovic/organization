@@ -1,6 +1,6 @@
 import { Controller, UseGuards, Request, Param, Delete, Post } from '@nestjs/common';
 import { RoleGuard } from '../guards/auth.guard';
-import { AssociationsUseCases } from 'src/application/useCases/associationsUseCases';
+import { AssociationsUseCases } from 'src/application/useCases/associations.usecases';
 import { UserRole } from 'src/core/enums/userRole';
 
 @Controller('places')

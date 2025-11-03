@@ -13,19 +13,19 @@ import { AuthController } from './presentation/controllers/auth.controller';
 import { PlacesController } from './presentation/controllers/places.controller';
 import { AssociationsController } from './presentation/controllers/associations.controller';
 import { AuthService } from './presentation/services/auth.service';
-import { PlaceUseCases } from './application/useCases/placesUseCases';
+import { PlaceUseCases } from './application/useCases/places.usecases';
 import { IPlacesRepository } from './core/interfaces/placesRepository';
 import { MongoosePlace, MongoosePlaceSchema } from './infrastructure/models/placeModel';
 import { IAssociationsRepository } from './core/interfaces/associationsRepository';
 import { IUsersRepository } from './core/interfaces/usersRepository';
 import { MongooseAssociation, MongooseAssociationSchema } from './infrastructure/models/associationModel';
 import { MongooseUser, MongooseUserSchema } from './infrastructure/models/userModel';
-import { AuthUseCases } from './application/useCases/authUseCases';
+import { AuthUseCases } from './application/useCases/auth.usecases';
 import { IRegistrationTokensRepository } from './core/interfaces/registrationTokensRepository';
 import { MongooseRegistrationToken, MongooseRegistrationTokenSchema } from './infrastructure/models/registrationTokenModel';
-import { RegistationTokensUseCases } from './application/useCases/registrationTokensUseCases';
-import { UsersUseCases } from './application/useCases/usersUseCases';
-import { AssociationsUseCases } from './application/useCases/associationsUseCases';
+import { RegistationTokensUseCases } from './application/useCases/registrationTokens.usecases';
+import { UsersUseCases } from './application/useCases/users.usecases';
+import { AssociationsUseCases } from './application/useCases/associations.usecases';
 
 @Module({
   imports: [

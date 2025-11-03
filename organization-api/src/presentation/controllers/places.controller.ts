@@ -1,5 +1,5 @@
 import { Controller, Get, UseGuards, Request, Param, Query } from '@nestjs/common';
-import { PlaceUseCases } from 'src/application/useCases/placesUseCases';
+import { PlaceUseCases } from 'src/application/useCases/places.usecases';
 import { UserRole } from 'src/core/enums/userRole';
 import { RoleGuard } from 'src/presentation/guards/auth.guard';
 

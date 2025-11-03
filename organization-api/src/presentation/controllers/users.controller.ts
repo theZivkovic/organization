@@ -2,8 +2,8 @@ import { Controller, UseGuards, Get, Request, Post, Body } from '@nestjs/common'
 import type { RegisterRequestDto } from '../dtos/registerRequestDto';
 import { RoleGuard } from 'src/presentation/guards/auth.guard';
 import type { CreateRegistrationTokenRequestDto } from 'src/presentation/dtos/createRegistrationTokenRequestDto';
-import { RegistationTokensUseCases } from 'src/application/useCases/registrationTokensUseCases';
-import { UsersUseCases } from 'src/application/useCases/usersUseCases';
+import { RegistationTokensUseCases } from 'src/application/useCases/registrationTokens.usecases';
+import { UsersUseCases } from 'src/application/useCases/users.usecases';
 import { UserRole } from 'src/core/enums/userRole';
 
 @Controller('users')

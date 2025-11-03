@@ -1,18 +1,17 @@
 import { ConflictException, Inject, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { IAssociationsRepository } from "src/core/interfaces/associationsRepository";
-import { PlaceUseCases } from "./placesUseCases";
+import { PlaceUseCases } from "./places.usecases";
+import { IPlacesRepository } from "src/core/interfaces/placesRepository";
 
 @Injectable()
 export class AssociationsUseCases {
 
     constructor(
         @Inject(IAssociationsRepository) private readonly associationsRepository: IAssociationsRepository,
-        private placesUseCases: PlaceUseCases) {
+    @Inject(IPlacesRepository) private readonly placesRepository: IPlacesRepository) {
     }
 
     async addUserToAPlace(managerUserId: string, userToAddId: string, placeToAddToId: string) {
-
-        const placesVisibleToManagingUser = await this.placesUseCases.getPlacesVisibleByUser(managerUserId);
 
         const userToAddAssociation = await this.associationsRepository.getForUser(userToAddId);
 
@@ -30,6 +29,15 @@ export class AssociationsUseCases {
             throw new NotFoundException('Managing user is not assigned to any place');
         }
 
+        const managingUserPlace = await this.placesRepository.getById(managingUserAssociation.placeId);
+        
+        if (!managingUserPlace){
+            throw new NotFoundException(`Place: ${managingUserAssociation.placeId} not found`)
+        }
+
+        const managingUserPlaceDescendants = await this.placesRepository.getAllDescendants(managingUserPlace.left, managingUserPlace.right);
+        const placesVisibleToManagingUser = [...managingUserPlaceDescendants, managingUserPlace];
+
         if (!placesVisibleToManagingUser.some(x => x.id === placeToAddToId)) {
             throw new UnauthorizedException('Managing user is not allowed to add users to this place');
         }
@@ -39,8 +47,6 @@ export class AssociationsUseCases {
 
     async removeUserFromAPlace(managerUserId: string, userToRemoveId: string, placeToRemoveFromId: string) {
         
-        const placesVisibleToManagingUser = await this.placesUseCases.getPlacesVisibleByUser(managerUserId);
-
         const userToRemoveAssociation = await this.associationsRepository.getForUser(userToRemoveId);
 
         if (!userToRemoveAssociation || userToRemoveAssociation.placeId !== placeToRemoveFromId) {
@@ -52,6 +58,15 @@ export class AssociationsUseCases {
         if (!managingUserAssociation) {
             throw new NotFoundException('Managing user is not assigned to any place');
         }
+
+        const managingUserPlace = await this.placesRepository.getById(managingUserAssociation.placeId);
+        
+        if (!managingUserPlace){
+            throw new NotFoundException(`Place: ${managingUserAssociation.placeId} not found`)
+        }
+
+        const managingUserPlaceDescendants = await this.placesRepository.getAllDescendants(managingUserPlace.left, managingUserPlace.right);
+        const placesVisibleToManagingUser = [...managingUserPlaceDescendants, managingUserPlace];
 
         if (!placesVisibleToManagingUser.some(x => x.id === placeToRemoveFromId)) {
             throw new UnauthorizedException('Managing user is not allowed to remove users from this place');
