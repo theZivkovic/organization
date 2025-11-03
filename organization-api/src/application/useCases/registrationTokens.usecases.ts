@@ -1,8 +1,8 @@
+import { randomUUID} from 'crypto';
 import { ConflictException, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { IUsersRepository } from "../../core/interfaces/usersRepository";
 import { IRegistrationTokensRepository } from "../../core/interfaces/registrationTokensRepository";
 import { RegistrationToken } from "../../core/entities/registrationToken";
-import { v4 as uuidv4 } from 'uuid';
 import { UserRole } from "../../core/enums/userRole";
 
 @Injectable()
@@ -42,7 +42,7 @@ export class RegistationTokensUseCases {
             await this.registrationTokensRepository.delete(existingToken.id);
         }
 
-        const newToken = uuidv4();
+        const newToken = randomUUID();
         return this.registrationTokensRepository.create({
             issuingUserId,
             toUserId: toUser.id,

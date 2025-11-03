@@ -1,4 +1,4 @@
-import { Controller, UseGuards, Request, Param, Delete, Post } from '@nestjs/common';
+import { Controller, UseGuards, Request, Param, Delete, Post, HttpCode } from '@nestjs/common';
 import { RoleGuard } from '../guards/auth.guard';
 import { AssociationsUseCases } from 'src/application/useCases/associations.usecases';
 import { UserRole } from 'src/core/enums/userRole';
@@ -20,6 +20,7 @@ export class AssociationsController {
       }
 
       @UseGuards(RoleGuard([UserRole.MANAGER]))
+      @HttpCode(204)
       @Delete(':placeId/users/:userId')
       async removeUserFromAPlace(@Request() req, @Param('placeId') placeToRemoveFromId: string, @Param('userId') userToRemoveId: string) {
         return this.associationsCases.removeUserFromAPlace(
