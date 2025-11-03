@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { MongoosePlace } from "../models/placeModel";
 import { Model } from "mongoose";
-import { IPlaceRepository } from "src/application/interfaces/placeRepository";
+import { IPlaceRepository } from "src/core/interfaces/placeRepository";
 import { Place } from "src/core/entities/place";
 import { mapToPlace } from "../mappers/mongooseModelMappers";
 

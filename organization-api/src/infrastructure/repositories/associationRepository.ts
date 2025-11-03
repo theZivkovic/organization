@@ -4,7 +4,7 @@ import { Model } from "mongoose";
 import {  MongooseAssociation } from "../models/associationModel";
 import { Association } from "src/core/entities/association";
 import { mapToAssociation } from "../mappers/mongooseModelMappers";
-import { IAssociationRepository } from "src/application/interfaces/associationRepository";
+import { IAssociationRepository } from "src/core/interfaces/associationRepository";
 
 @Injectable()
 export class AssociationRepository implements IAssociationRepository {
@@ -12,12 +12,12 @@ export class AssociationRepository implements IAssociationRepository {
 
   async get(userId: string, placeId: string): Promise<Association | null> {
     const dbAssociation = await this.associationModel.findOne({ userId, placeId }).exec();
-    return mapToAssociation(dbAssociation?.toObject() as MongooseAssociation);
+    return dbAssociation ? mapToAssociation(dbAssociation.toObject() as MongooseAssociation) : null;
   }
 
   async getForUser(userId: string): Promise<Association | null> {
     const dbAssociation = await this.associationModel.findOne({ userId }).exec();
-    return mapToAssociation(dbAssociation?.toObject() as MongooseAssociation);
+    return dbAssociation ? mapToAssociation(dbAssociation.toObject() as MongooseAssociation): null;
   };
 
   async getAllForPlaces(placeIds: Array<string>): Promise<Array<Association>> {

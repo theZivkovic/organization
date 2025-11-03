@@ -1,5 +1,5 @@
 
-import { Association } from "../../core/entities/association";
+import { Association } from "../entities/association";
 
 export interface IAssociationRepository {
     get(userId: string, placeId: string): Promise<Association | null>;

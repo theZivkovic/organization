@@ -1,7 +1,7 @@
 import { Inject, Injectable, NotFoundException } from "@nestjs/common";
-import { IAssociationRepository } from "../interfaces/associationRepository";
-import { IPlaceRepository } from "../interfaces/placeRepository";
-import { IUserRepository } from "../interfaces/userRepository";
+import { IAssociationRepository } from "../../core/interfaces/associationRepository";
+import { IPlaceRepository } from "../../core/interfaces/placeRepository";
+import { IUserRepository } from "../../core/interfaces/userRepository";
 import { Place } from "src/core/entities/place";
 import { UserRole } from "src/core/enums/userRole";
 
@@ -42,7 +42,7 @@ export class PlaceCases {
         })); 
     }
 
-    async getPlacesUsersVisibleByUser(userId: string, roleFilter: UserRole): Promise<Array<Place>>{
+    async getPlacesUsersVisibleByUser(userId: string, roleFilter: UserRole) {
         const userAssociation = await this.associationRepository.getForUser(userId);
 
         if (!userAssociation){
@@ -102,7 +102,7 @@ export class PlaceCases {
         };
     }
 
-    async getPlaceUsersVisibleByUser(userId: string, placeToGetId: string, roleFilter: UserRole): Promise<Array<Place>>{
+    async getPlaceUsersVisibleByUser(userId: string, placeToGetId: string, roleFilter: UserRole) {
         const userAssociation = await this.associationRepository.getForUser(userId);
 
         if (!userAssociation){

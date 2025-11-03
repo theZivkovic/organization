@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { MongooseRegistrationToken } from "../models/registrationTokenModel";
-import { IRegistrationTokenRepository } from "src/application/interfaces/registrationgTokenRepository";
+import { IRegistrationTokenRepository } from "src/core/interfaces/registrationgTokenRepository";
 import { mapToRegistrationToken } from "../mappers/mongooseModelMappers";
 
 @Injectable()

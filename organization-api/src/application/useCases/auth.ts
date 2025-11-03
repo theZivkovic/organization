@@ -1,5 +1,5 @@
 import { Inject, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
-import { IUserRepository } from "../interfaces/userRepository";
+import { IUserRepository } from "../../core/interfaces/userRepository";
 import { comparePassword, User } from "src/core/entities/user";
 
 @Injectable()

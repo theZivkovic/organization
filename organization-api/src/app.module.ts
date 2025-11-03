@@ -8,24 +8,24 @@ import { UsersController } from './presentation/controllers/users.controller';
 import { AssociationRepository } from './infrastructure/repositories/associationRepository';
 import { UserRepository } from './infrastructure/repositories/userRepository';
 import { RegistrationTokenRepository } from './infrastructure/repositories/registrationTokenRepository';
-import { AssociationsService } from './presentation/services/associations.service';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthController } from './presentation/controllers/auth.controller';
 import { PlacesController } from './presentation/controllers/places.controller';
 import { AssociationsController } from './presentation/controllers/associations.controller';
 import { AuthService } from './presentation/services/auth.service';
 import { PlaceCases } from './application/useCases/places';
-import { IPlaceRepository } from './application/interfaces/placeRepository';
+import { IPlaceRepository } from './core/interfaces/placeRepository';
 import { MongoosePlace, MongoosePlaceSchema } from './infrastructure/models/placeModel';
-import { IAssociationRepository } from './application/interfaces/associationRepository';
-import { IUserRepository } from './application/interfaces/userRepository';
+import { IAssociationRepository } from './core/interfaces/associationRepository';
+import { IUserRepository } from './core/interfaces/userRepository';
 import { MongooseAssociation, MongooseAssociationSchema } from './infrastructure/models/associationModel';
 import { MongooseUser, MongooseUserSchema } from './infrastructure/models/userModel';
 import { AuthCases } from './application/useCases/auth';
-import { IRegistrationTokenRepository } from './application/interfaces/registrationgTokenRepository';
+import { IRegistrationTokenRepository } from './core/interfaces/registrationgTokenRepository';
 import { MongooseRegistrationToken, MongooseRegistrationTokenSchema } from './infrastructure/models/registrationTokenModel';
 import { RegistationTokensCases } from './application/useCases/registrationTokens';
 import { UsersCases } from './application/useCases/users';
+import { AssociationsCases } from './application/useCases/associations';
 
 @Module({
   imports: [
@@ -46,8 +46,8 @@ import { UsersCases } from './application/useCases/users';
   controllers: [AppController, UsersController, AuthController, PlacesController, AssociationsController],
   providers: [
     AppService, AuthService,
-    AssociationRepository, AssociationsService,
-    PlaceCases, AuthCases, RegistationTokensCases, UsersCases,
+    AssociationRepository,
+    PlaceCases, AuthCases, RegistationTokensCases, UsersCases, AssociationsCases,
     {
       provide: IPlaceRepository,
       useClass: PlaceRepository
