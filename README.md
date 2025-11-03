@@ -10,10 +10,19 @@ This is a project for managing an organization. It contains a docker-compose tha
 
 ## Run / Test
 
-To run the system, just simply: `docker compose up -d --build`
-To run the tests: `cd organization-api && npm run test`
+* To run the system, just simply: `docker compose up -d --build`
+* To run the tests: `cd organization-api && npm run test`
 
 After the containers are up, you can play around with API in `organization.http` file. You'll need a `Rest Client` extension for VSCode (extensionId: `humao.rest-clien`)
+
+## Flow example
+
+* Login as a main manager
+* Create registration token for a new user (provide new user email and role)
+* Register new user with the registration token
+* List places/place by main manager / new user
+* Add user to a place
+* Remove user from the place
 
 ## Seeders
 
@@ -39,4 +48,4 @@ An association between main manager and main place (`Srbija`) is seeded into col
 ## Wish I've implemented
 
 * request validation
-* more tests: I only covered tests for a most complicated case, adding a user to a place
+* more tests: I only covered one bigger feature with tests, adding a user to a place
