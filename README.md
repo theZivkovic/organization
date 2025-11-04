@@ -49,4 +49,5 @@ An association between main manager and main place (`Srbija`) is seeded into col
 ## Wish I've implemented
 
 * request validation
+* transactions
 * more tests: I only covered one bigger feature with tests, adding a user to a place
